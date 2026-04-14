@@ -78,6 +78,81 @@
             opacity: 0.7;
         }
 
+        .nav-panel {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            border-top: 1px solid var(--ink);
+            border-bottom: 1px solid var(--ink);
+            margin: 0 0 2.5rem 0;
+            padding: 0.9rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 0;
+            opacity: 0.75;
+        }
+
+        .nav-panel-item {
+            padding: 0.35rem 1.1rem;
+            text-align: center;
+            line-height: 1.5;
+            border-right: 1px solid var(--ink);
+            cursor: default;
+        }
+
+        .nav-panel-item:last-child {
+            border-right: none;
+        }
+
+        .nav-panel-item:hover {
+            opacity: 0.6;
+        }
+
+        .nav-panel-top {
+            width: 100%;
+            border-right: none;
+            border-bottom: 1px solid var(--ink);
+            padding-bottom: 0.6rem;
+            margin-bottom: 0.3rem;
+            text-align: center;
+        }
+
+        .nav-panel-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .nav-panel-bottom {
+            width: 100%;
+            text-align: center;
+            border-top: 1px solid var(--ink);
+            padding-top: 0.6rem;
+            margin-top: 0.3rem;
+            font-size: 0.66rem;
+        }
+
+        @media (max-width: 640px) {
+            .nav-panel {
+                flex-direction: column;
+                gap: 0;
+            }
+            .nav-panel-item {
+                border-right: none;
+                border-bottom: 1px solid var(--ink);
+                width: 100%;
+                padding: 0.5rem 1rem;
+            }
+            .nav-panel-item:last-child {
+                border-bottom: none;
+            }
+        }
+
         .production-note {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.7rem;
@@ -264,13 +339,14 @@
 
         .header-logo {
             position: absolute;
-            left: calc(24px + 1.5cm + 5mm);
+            left: calc(24px + 1.5cm);
             top: 50%;
             transform: translateY(-50%);
-            width: clamp(50px, 7vw, 90px);
-            height: clamp(50px, 7vw, 90px);
+            width: clamp(34px, 4.73vw, 61px);
+            height: clamp(34px, 4.73vw, 61px);
             object-fit: contain;
-            opacity: 1;
+            opacity: 0.8;
+            filter: brightness(1.35);
         }
 
         .letterpress {
@@ -304,8 +380,8 @@
     <article class="scroll-canvas">
         <div class="stamp">茶南</div>
 
-        <header class="mb-32">
-            <div class="mono mb-10 text-center">Est. 2024 / Catalog / Moscow</div>
+        <header style="margin-bottom: calc(8rem - 2cm)">
+            <div class="mono mb-10 text-center">Est. 2002 / Catalog / Rostov-on-Don / Moscow</div>
             
             <div class="header-box">
                 <div class="corner corner-tl"></div>
@@ -313,7 +389,7 @@
                 <div class="corner corner-bl"></div>
                 <div class="corner corner-br"></div>
                 <div class="header-monogram">茶</div>
-                <img src="/logo.svg" alt="Логотип Чайнань" class="header-logo">
+                <img src="/logo.png" alt="Логотип Чайнань" class="header-logo">
                 <h1 class="letterpress">Чайная Лавка «Чайнань»</h1>
                 <p class="subtitle-mono text-center leading-relaxed">
                     для тех кто понимает чай
@@ -321,15 +397,28 @@
             </div>
         </header>
 
+        <h2 class="category-title" style="margin-bottom: 0.8rem;">Наши Проекты:</h2>
+
+        <nav class="nav-panel">
+            <div class="nav-panel-item nav-panel-top">Клуб имени «Председателя С.» — беседы о чае, о философии и выздоровлении духа и тела</div>
+            <div class="nav-panel-row">
+                <div class="nav-panel-item">Чай на каждый день</div>
+                <div class="nav-panel-item">Чайная церемония —<br>проведение и обучение</div>
+                <div class="nav-panel-item">Чайная пьянка —<br>чайно-музыкальные вечера</div>
+                <div class="nav-panel-item" style="border-right:none">Распродажа</div>
+            </div>
+            <div class="nav-panel-bottom">Чай на заказ — для оптовых покупателей и эксклюзив для ценителей</div>
+        </nav>
+
         <main>
             <div class="tea-entry">
                 <div class="tea-watermark">普洱</div>
                 <h2 class="category-title">Пуэр</h2>
                 <p class="description">Ферментированный и выдержанный. Чай с глубоким потенциалом старения.</p>
-                <div class="production-note">
+                <div class="production-note" data-tea="puer">
                     Шэн: живой, свежий, меняется с годами как вино.<br>
                     Шу: ускоренная ферментация, ноты земли, леса и тёмного шоколада.<br>
-                    Сорта: Шэн Пуэр, Шу Пуэр.
+                    Сорта в наличии: <span class="tea-varieties">Шэн Пуэр, Шу Пуэр</span>.
                 </div>
             </div>
 
@@ -337,9 +426,9 @@
                 <div class="tea-watermark">乌龙</div>
                 <h2 class="category-title">Улун</h2>
                 <p class="description">Огромный диапазон вкусов: от цветочного молочного до тёмного поджаристого.</p>
-                <div class="production-note">
+                <div class="production-note" data-tea="oolong">
                     Частично окисленный чай (бирюзовый), находящийся между зелёным и красным.<br>
-                    Сорта: Те Гуань Инь, Да Хун Пао.
+                    Сорта в наличии: <span class="tea-varieties">Те Гуань Инь, Да Хун Пао</span>.
                 </div>
             </div>
 
@@ -347,9 +436,9 @@
                 <div class="tea-watermark">绿茶</div>
                 <h2 class="category-title">Зелёный чай</h2>
                 <p class="description">Свежий, травянистый, иногда с морским или ореховым оттенком.</p>
-                <div class="production-note">
+                <div class="production-note" data-tea="green">
                     Минимальная обработка, лист фиксируют сразу после сбора.<br>
-                    Сорта: Лун Цзин, Би Ло Чунь, Маофэн.
+                    Сорта в наличии: <span class="tea-varieties">Лун Цзин, Би Ло Чунь, Маофэн</span>.
                 </div>
             </div>
 
@@ -357,9 +446,9 @@
                 <div class="tea-watermark">白茶</div>
                 <h2 class="category-title">Белый чай</h2>
                 <p class="description">Медовый, цветочный, очень мягкий. Самый деликатный вид.</p>
-                <div class="production-note">
+                <div class="production-note" data-tea="white">
                     Листья просто вялят на воздухе без активного вмешательства.<br>
-                    Сорта: Байхао Иньчжэнь, Бай Му Дань.
+                    Сорта в наличии: <span class="tea-varieties">Байхао Иньчжэнь, Бай Му Дань</span>.
                 </div>
             </div>
 
@@ -367,9 +456,9 @@
                 <div class="tea-watermark">黄茶</div>
                 <h2 class="category-title">Жёлтый чай</h2>
                 <p class="description">Редкость. Похож на зелёный, но с выраженной мягкой сладостью.</p>
-                <div class="production-note">
+                <div class="production-note" data-tea="yellow">
                     Технология «томления» (Мэнь Хуан) убирает излишнюю травянистость.<br>
-                    Сорт: Цзюнь Шань Инь Чжэнь.
+                    Сорта в наличии: <span class="tea-varieties">Цзюнь Шань Инь Чжэнь</span>.
                 </div>
             </div>
 
@@ -377,9 +466,9 @@
                 <div class="tea-watermark">红茶</div>
                 <h2 class="category-title">Красный чай</h2>
                 <p class="description">Мёд, сухофрукты, шоколад. То, что на Западе называют «чёрным».</p>
-                <div class="production-note">
+                <div class="production-note" data-tea="red">
                     Полностью окисленный лист, дающий насыщенный прогревающий настой.<br>
-                    Сорта: Дянь Хун, Цзинь Цзюнь Мэй, Дянь Хун Маофэн.
+                    Сорта в наличии: <span class="tea-varieties">Дянь Хун, Цзинь Цзюнь Мэй, Дянь Хун Маофэн</span>.
                 </div>
             </div>
 
@@ -387,9 +476,9 @@
                 <div class="tea-watermark">黑茶</div>
                 <h2 class="category-title">Чёрный чай</h2>
                 <p class="description">Постферментированные чаи с плотным, «старым» вкусом.</p>
-                <div class="production-note">
+                <div class="production-note" data-tea="black">
                     Хэй Ча — отдельный вид (не пуэр), проходящий специфическую ферментацию в кучах.<br>
-                    Сорта: Люань, Фу Чжуань.
+                    Сорта в наличии: <span class="tea-varieties">Люань, Фу Чжуань</span>.
                 </div>
             </div>
         </main>
@@ -425,6 +514,21 @@
         }, { threshold: 0.15 });
 
         document.querySelectorAll('.tea-entry').forEach(el => observer.observe(el));
+
+        // Динамическая загрузка сортов в наличии
+        fetch('/api/teas')
+            .then(r => r.json())
+            .then(teas => {
+                document.querySelectorAll('.production-note[data-tea]').forEach(note => {
+                    const key = note.getAttribute('data-tea');
+                    const span = note.querySelector('.tea-varieties');
+                    if (span && teas[key]) {
+                        const list = teas[key];
+                        span.textContent = list.length ? list.join(', ') : '—';
+                    }
+                });
+            })
+            .catch(() => {}); // если API недоступно — показывается дефолтный текст
     </script>
 </body>
 </html>

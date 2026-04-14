@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чайнань — Управление ассортиментом</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Yanone+Kaffeesatz:wght@400;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --paper: #dccfb2;
+            --ink: #2d241e;
+            --accent: #372A22;
+            --red: #8b3a2a;
+        }
+
+        body {
+            background-color: var(--paper);
+            color: var(--ink);
+            font-family: 'JetBrains Mono', monospace;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 680px;
+        }
+
+        .mono-label {
+            font-size: 0.6rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            opacity: 0.6;
+            margin-bottom: 0.4rem;
+        }
+
+        h1 {
+            font-family: 'Yanone Kaffeesatz', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.25rem;
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px solid var(--ink);
+            margin: 1.5rem 0;
+        }
+
+        /* --- LOGIN SCREEN --- */
+        #login-screen {
+            text-align: center;
+        }
+
+        #login-screen h1 { margin-bottom: 1.5rem; }
+
+        .input-group {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        input[type="password"], input[type="text"] {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--ink);
+            padding: 0.5rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            color: var(--ink);
+            outline: none;
+        }
+
+        button {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            background: var(--ink);
+            color: var(--paper);
+            border: none;
+            padding: 0.7rem 2rem;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        button:hover { opacity: 0.8; }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--ink);
+            border: 1px solid var(--ink);
+            font-size: 0.6rem;
+            padding: 0.5rem 1.2rem;
+            margin-top: 0;
+        }
+
+        .error-msg {
+            color: var(--red);
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            margin-top: 0.5rem;
+            min-height: 1rem;
+        }
+
+        /* --- ADMIN PANEL --- */
+        #admin-screen { display: none; }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 0.5rem;
+        }
+
+        .tea-block {
+            margin-bottom: 1.5rem;
+        }
+
+        .tea-name {
+            font-family: 'Yanone Kaffeesatz', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.3rem;
+        }
+
+        .tea-hint {
+            font-size: 0.58rem;
+            opacity: 0.5;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.4rem;
+        }
+
+        textarea {
+            width: 100%;
+            background: transparent;
+            border: 1px solid rgba(45,36,30,0.3);
+            padding: 0.5rem 0.7rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--ink);
+            resize: vertical;
+            min-height: 60px;
+            outline: none;
+            line-height: 1.6;
+        }
+
+        textarea:focus { border-color: var(--ink); }
+
+        .save-bar {
+            position: sticky;
+            bottom: 0;
+            background: var(--paper);
+            padding: 1rem 0;
+            border-top: 1px solid var(--ink);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .status-msg {
+            font-size: 0.6rem;
+            letter-spacing: 0.15em;
+            opacity: 0.7;
+        }
+
+        .status-msg.ok { color: #2a5e2a; }
+        .status-msg.err { color: var(--red); }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- LOGIN -->
+    <div id="login-screen">
+        <div class="mono-label">Чайнань / Панель управления</div>
+        <h1>Вход</h1>
+        <hr class="divider">
+        <div class="input-group">
+            <div class="mono-label">Пароль</div>
+            <input type="password" id="password-input" placeholder="введите пароль" autocomplete="current-password">
+        </div>
+        <div class="error-msg" id="login-error"></div>
+        <button onclick="doLogin()">Войти</button>
+    </div>
+
+    <!-- ADMIN PANEL -->
+    <div id="admin-screen">
+        <div class="top-bar">
+            <div>
+                <div class="mono-label">Чайнань / Панель управления</div>
+                <h1>Ассортимент</h1>
+            </div>
+            <button class="btn-secondary" onclick="doLogout()">Выйти</button>
+        </div>
+        <hr class="divider">
+
+        <div class="mono-label" style="margin-bottom:1.2rem;">Каждый сорт — с новой строки. Пустые строки игнорируются.</div>
+
+        <div id="teas-form"></div>
+
+        <div class="save-bar">
+            <button onclick="saveTeas()">Сохранить</button>
+            <span class="status-msg" id="save-status"></span>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    const TEA_LABELS = {
+        puer:   'Пуэр',
+        oolong: 'Улун',
+        green:  'Зелёный чай',
+        white:  'Белый чай',
+        yellow: 'Жёлтый чай',
+        red:    'Красный чай',
+        black:  'Чёрный чай'
+    };
+
+    let currentTeas = {};
+
+    async function init() {
+        const res = await fetch('/api/me');
+        const data = await res.json();
+        if (data.logged_in) {
+            showAdmin();
+        }
+    }
+
+    async function doLogin() {
+        const pw = document.getElementById('password-input').value;
+        const err = document.getElementById('login-error');
+        err.textContent = '';
+        const res = await fetch('/api/login', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({password: pw})
+        });
+        if (res.ok) {
+            showAdmin();
+        } else {
+            err.textContent = 'Неверный пароль';
+        }
+    }
+
+    async function doLogout() {
+        await fetch('/api/logout', {method: 'POST'});
+        document.getElementById('admin-screen').style.display = 'none';
+        document.getElementById('login-screen').style.display = '';
+        document.getElementById('password-input').value = '';
+    }
+
+    async function showAdmin() {
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('admin-screen').style.display = '';
+        const res = await fetch('/api/teas');
+        currentTeas = await res.json();
+        renderForm();
+    }
+
+    function renderForm() {
+        const form = document.getElementById('teas-form');
+        form.innerHTML = '';
+        for (const [key, label] of Object.entries(TEA_LABELS)) {
+            const varieties = (currentTeas[key] || []).join('\n');
+            form.innerHTML += `
+                <div class="tea-block">
+                    <div class="tea-name">${label}</div>
+                    <div class="tea-hint">Сорта в наличии</div>
+                    <textarea id="tea-${key}" rows="3">${varieties}</textarea>
+                </div>`;
+        }
+    }
+
+    async function saveTeas() {
+        const status = document.getElementById('save-status');
+        status.textContent = 'Сохраняю...';
+        status.className = 'status-msg';
+
+        const updated = {};
+        for (const key of Object.keys(TEA_LABELS)) {
+            const raw = document.getElementById(`tea-${key}`).value;
+            updated[key] = raw.split('\n').map(s => s.trim()).filter(Boolean);
+        }
+
+        const res = await fetch('/api/teas', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(updated)
+        });
+
+        if (res.ok) {
+            currentTeas = updated;
+            status.textContent = '✓ Сохранено';
+            status.className = 'status-msg ok';
+            setTimeout(() => { status.textContent = ''; }, 3000);
+        } else {
+            status.textContent = 'Ошибка при сохранении';
+            status.className = 'status-msg err';
+        }
+    }
+
+    // Enter на поле пароля
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('password-input').addEventListener('keydown', e => {
+            if (e.key === 'Enter') doLogin();
+        });
+        init();
+    });
+</script>
+</body>
+</html>
