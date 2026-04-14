@@ -35,6 +35,10 @@
             line-height: 1.6;
         }
 
+        body.tea-party-modal-open {
+            overflow: hidden;
+        }
+
         .paper-overlay {
             position: fixed;
             inset: 0;
@@ -101,6 +105,120 @@
             line-height: 1.5;
             border-right: 1px solid var(--ink);
             cursor: default;
+        }
+
+        .tea-party-trigger {
+            cursor: pointer;
+            transition: transform 0.18s ease, opacity 0.18s ease;
+            transform-origin: center;
+        }
+
+        .tea-party-trigger:hover {
+            opacity: 1;
+            transform: scale(1.04);
+        }
+
+        .tea-party-modal {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) scale(0.98);
+            width: min(90vw, 640px);
+            max-height: 82vh;
+            overflow-y: auto;
+            visibility: hidden;
+            z-index: 300;
+            background-color: var(--paper);
+            background-image:
+                linear-gradient(rgba(220, 207, 178, 0.06), rgba(220, 207, 178, 0.06)),
+                url("/paper-bg.jpg");
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            text-shadow:
+                0 0.3mm 0 #372A22,
+                0 0 0.9mm #372A22,
+                0.2mm 0.2mm 0 #372A22;
+            border: 1px solid rgba(45, 36, 30, 0.45);
+            box-shadow: 0 30px 80px rgba(45, 36, 30, 0.35);
+            padding: 28px;
+            text-align: left;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.864rem;
+            line-height: 1.65;
+            letter-spacing: 0.03em;
+            text-transform: none;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s ease;
+        }
+
+        .tea-party-backdrop {
+            position: fixed;
+            inset: 0;
+            visibility: hidden;
+            z-index: 250;
+            background: rgba(45, 36, 30, 0.45);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.22s ease, visibility 0.22s ease;
+        }
+
+        .tea-party-backdrop.is-open {
+            visibility: visible;
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .tea-party-modal.is-open {
+            visibility: visible;
+            opacity: 1;
+            pointer-events: auto;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .tea-party-modal-close {
+            position: absolute;
+            right: 16px;
+            top: 14px;
+            border: 1px solid rgba(45, 36, 30, 0.45);
+            background: transparent;
+            color: #fff;
+            text-shadow:
+                0 0.3mm 0 #372A22,
+                0 0 0.9mm #372A22,
+                0.2mm 0.2mm 0 #372A22;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            padding: 0.25rem 0.45rem;
+            cursor: pointer;
+        }
+
+        .tea-party-modal h3 {
+            font-family: 'Yanone Kaffeesatz', sans-serif;
+            font-size: 1.04rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            margin-bottom: 1rem;
+        }
+
+        .tea-party-modal strong {
+            font-weight: 700;
+        }
+
+        .tea-party-modal ul {
+            list-style: disc;
+            margin: 0.6rem 0 1rem 1.2rem;
+        }
+
+        .tea-party-modal li {
+            margin-bottom: 0.35rem;
+        }
+
+        .tea-party-modal-section {
+            margin-top: 1rem;
         }
 
         .nav-panel-item:last-child {
@@ -404,11 +522,45 @@
             <div class="nav-panel-row">
                 <div class="nav-panel-item">Чай на каждый день</div>
                 <div class="nav-panel-item">Чайная церемония —<br>проведение и обучение</div>
-                <div class="nav-panel-item">Чайная пьянка —<br>чайно-музыкальные вечера</div>
+                <div class="nav-panel-item tea-party-trigger" tabindex="0" role="button" aria-haspopup="dialog" aria-expanded="false">Чайная пьянка —<br>чайно-музыкальные вечера</div>
                 <div class="nav-panel-item" style="border-right:none">Распродажа</div>
             </div>
             <div class="nav-panel-bottom">Чай на заказ — для оптовых покупателей и эксклюзив для ценителей</div>
         </nav>
+
+        <div class="tea-party-backdrop" aria-hidden="true"></div>
+
+        <div class="tea-party-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Чайная пьянка: китайский чай и музыка">
+            <button class="tea-party-modal-close" type="button" aria-label="Закрыть">×</button>
+            <h3>Чайная пьянка — чайно-музыкальные вечера</h3>
+            <p><strong>Чайная пьянка: китайский чай и музыка</strong></p>
+            <p>Гунфу Ча в неформальной обстановке. Пледы, подушки на пол, живой звук или атмосферный плейлист. Никакого пафоса.</p>
+            <div class="tea-party-modal-section">
+                <p><strong>Что будет:</strong></p>
+                <ul>
+                    <li>3 сорта чая (улун, шу пуэр, шен — на ваш выбор)</li>
+                    <li>5–7 проливов одного чая</li>
+                    <li>Живая музыка или электроника / джаз / lo-fi</li>
+                    <li>Разговоры о чае, жизни и вкусах — или тишина, если хочется молчать</li>
+                    <li>Лёгкий снэк: сухофрукты, тёмный шоколад, рисовые хрустики</li>
+                </ul>
+            </div>
+            <div class="tea-party-modal-section">
+                <p><strong>Форматы:</strong></p>
+                <ul>
+                    <li>В студии (2–2.5 часа) — от 1500 ₽/чел</li>
+                    <li>Выездная пьянка (до 6 человек) — от 7000 ₽ за компанию</li>
+                    <li>Тематические вечера:
+                        <ul>
+                            <li>«Пуэр и тёмная электроника»</li>
+                            <li>«Те Гуань Инь и джаз»</li>
+                            <li>«Шен пуэр и тишина» (без музыки)</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <p><strong>Запись:</strong> @ваш_телеграм</p>
+        </div>
 
         <main>
             <div class="tea-entry">
@@ -514,6 +666,57 @@
         }, { threshold: 0.15 });
 
         document.querySelectorAll('.tea-entry').forEach(el => observer.observe(el));
+
+        const teaPartyTrigger = document.querySelector('.tea-party-trigger');
+        const teaPartyModal = document.querySelector('.tea-party-modal');
+        const teaPartyModalClose = document.querySelector('.tea-party-modal-close');
+        const teaPartyBackdrop = document.querySelector('.tea-party-backdrop');
+
+        function openTeaPartyModal() {
+            document.body.classList.add('tea-party-modal-open');
+            teaPartyBackdrop.classList.add('is-open');
+            teaPartyModal.classList.add('is-open');
+            teaPartyModal.setAttribute('aria-hidden', 'false');
+            teaPartyTrigger.setAttribute('aria-expanded', 'true');
+        }
+
+        function closeTeaPartyModal() {
+            document.body.classList.remove('tea-party-modal-open');
+            teaPartyBackdrop.classList.remove('is-open');
+            teaPartyModal.classList.remove('is-open');
+            teaPartyModal.setAttribute('aria-hidden', 'true');
+            teaPartyTrigger.setAttribute('aria-expanded', 'false');
+        }
+
+        teaPartyTrigger.addEventListener('click', event => {
+            if (event.target.closest('.tea-party-modal')) return;
+            openTeaPartyModal();
+        });
+
+        teaPartyTrigger.addEventListener('keydown', event => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                openTeaPartyModal();
+            }
+        });
+
+        teaPartyModalClose.addEventListener('click', event => {
+            event.stopPropagation();
+            closeTeaPartyModal();
+        });
+
+        teaPartyBackdrop.addEventListener('click', closeTeaPartyModal);
+
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape') closeTeaPartyModal();
+        });
+
+        document.addEventListener('click', event => {
+            if (!teaPartyModal.classList.contains('is-open')) return;
+            if (!teaPartyModal.contains(event.target) && !teaPartyTrigger.contains(event.target)) {
+                closeTeaPartyModal();
+            }
+        });
 
         // Динамическая загрузка сортов в наличии
         fetch('/api/teas')
