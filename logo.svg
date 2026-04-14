@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+
+  <!-- Внешнее кольцо -->
+  <circle cx="50" cy="50" r="46" fill="none" stroke="#2C5F35" stroke-width="4.5"/>
+
+  <!-- Тело чаши -->
+  <path d="M20 67 Q22 86 50 86 Q78 86 80 67 Z" fill="#2C5F35"/>
+
+  <!-- Ободок -->
+  <ellipse cx="50" cy="67" rx="30" ry="6.5" fill="#2C5F35"/>
+
+  <!-- Поверхность чая -->
+  <ellipse cx="50" cy="67" rx="20" ry="3.5" fill="#C4D5B0"/>
+
+  <!-- Завиток -->
+  <path d="M50 67 C43 65 42 60 47 58 C52 56 55 60 52 64"
+        fill="none" stroke="#2C5F35" stroke-width="1.8" stroke-linecap="round"/>
+
+  <!-- Пар: единая S-образная кривая -->
+  <path d="M 45 60
+           C 30 52, 34 40, 50 36
+           C 66 32, 70 20, 55 14"
+        fill="none"
+        stroke="#2C5F35"
+        stroke-width="11"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+
+</svg>

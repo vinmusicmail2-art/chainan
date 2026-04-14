@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Чайная лавка «Чайнань» — каталог чаёв. Пуэр, улун, зелёный, белый, жёлтый, красный и чёрный чай. Москва.">
     <title>Чайная Лавка «Чайнань»</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Yanone+Kaffeesatz:wght@200;300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;1,400&family=JetBrains+Mono&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Inter:wght@300;400;700;900&family=Yanone+Kaffeesatz:wght@200;300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;1,400&family=JetBrains+Mono&display=swap');
 
         @font-face {
             font-family: 'WDXL Lubrifont TC';
@@ -38,7 +38,7 @@
         .texture-overlay {
             position: fixed;
             inset: 0;
-            background-image: url("https://www.transparenttextures.com/patterns/p6.png");
+            background-image: url("/p6.png");
             mix-blend-mode: multiply;
             pointer-events: none;
             opacity: 0.4;
@@ -95,7 +95,6 @@
             user-select: none;
         }
 
-        /* Тот самый заголовок в одну строку с выделением */
         .header-box {
             border: 1px solid rgba(45, 36, 30, 0.15);
             padding: 40px 20px;
@@ -111,7 +110,8 @@
             letter-spacing: -0.01em;
             line-height: 1;
             display: block;
-            white-space: nowrap;
+            overflow-wrap: break-word;
+            word-break: break-word;
             text-shadow: 0.5px 0.5px 0px rgba(255,255,255,0.3);
         }
 
@@ -168,6 +168,18 @@
             font-style: normal;
         }
 
+        .header-logo {
+            position: absolute;
+            left: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: clamp(50px, 7vw, 90px);
+            height: clamp(50px, 7vw, 90px);
+            object-fit: contain;
+            mix-blend-mode: screen;
+            opacity: 1;
+        }
+
         .letterpress {
             font-size: clamp(1.5rem, 4vw, 3rem) !important;
             filter: contrast(110%) brightness(95%);
@@ -182,6 +194,11 @@
             opacity: 0.7;
         }
     </style>
+    <noscript>
+        <style>
+            .tea-entry { opacity: 1 !important; transform: none !important; }
+        </style>
+    </noscript>
 </head>
 <body>
     <div class="texture-overlay"></div>
@@ -193,6 +210,7 @@
             <div class="mono mb-10 text-center">Est. 2024 / Catalog / Moscow</div>
             
             <div class="header-box">
+                <img src="/logo.png" alt="Логотип Чайнань" class="header-logo">
                 <h1 class="letterpress">Чайная Лавка «Чайнань»</h1>
             </div>
 
@@ -203,7 +221,7 @@
 
         <main>
             <div class="tea-entry">
-                <h3 class="category-title">Зелёный чай</h3>
+                <h2 class="category-title">Зелёный чай</h2>
                 <p class="description">Свежий, травянистый, иногда с морским или ореховым оттенком.</p>
                 <div class="production-note">
                     Минимальная обработка, лист фиксируют сразу после сбора.<br>
@@ -212,7 +230,7 @@
             </div>
 
             <div class="tea-entry">
-                <h3 class="category-title">Белый чай</h3>
+                <h2 class="category-title">Белый чай</h2>
                 <p class="description">Медовый, цветочный, очень мягкий. Самый деликатный вид.</p>
                 <div class="production-note">
                     Листья просто вялят на воздухе без активного вмешательства.<br>
@@ -221,7 +239,7 @@
             </div>
 
             <div class="tea-entry">
-                <h3 class="category-title">Жёлтый чай</h3>
+                <h2 class="category-title">Жёлтый чай</h2>
                 <p class="description">Редкость. Похож на зелёный, но с выраженной мягкой сладостью.</p>
                 <div class="production-note">
                     Технология «томления» (Мэнь Хуан) убирает излишнюю травянистость.<br>
@@ -230,7 +248,7 @@
             </div>
 
             <div class="tea-entry">
-                <h3 class="category-title">Улун</h3>
+                <h2 class="category-title">Улун</h2>
                 <p class="description">Огромный диапазон вкусов: от цветочного молочного до тёмного поджаристого.</p>
                 <div class="production-note">
                     Частично окисленный чай (бирюзовый), находящийся между зелёным и красным.<br>
@@ -239,7 +257,7 @@
             </div>
 
             <div class="tea-entry">
-                <h3 class="category-title">Красный чай</h3>
+                <h2 class="category-title">Красный чай</h2>
                 <p class="description">Мёд, сухофрукты, шоколад. То, что на Западе называют «чёрным».</p>
                 <div class="production-note">
                     Полностью окисленный лист, дающий насыщенный прогревающий настой.<br>
@@ -248,7 +266,7 @@
             </div>
 
             <div class="tea-entry">
-                <h3 class="category-title">Пуэр</h3>
+                <h2 class="category-title">Пуэр</h2>
                 <p class="description">Ферментированный и выдержанный. Чай с глубоким потенциалом старения.</p>
                 <div class="production-note">
                     Шэн: живой, свежий, меняется с годами как вино.<br>
@@ -258,7 +276,7 @@
             </div>
 
             <div class="tea-entry">
-                <h3 class="category-title">Чёрный чай</h3>
+                <h2 class="category-title">Чёрный чай</h2>
                 <p class="description">Постферментированные чаи с плотным, «старым» вкусом.</p>
                 <div class="production-note">
                     Хэй Ча — отдельный вид (не пуэр), проходящий специфическую ферментацию в кучах.<br>
@@ -292,6 +310,7 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.15 });
