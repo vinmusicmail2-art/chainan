@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чайная Лавка «Чайнань»</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Yanone+Kaffeesatz:wght@200;300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;1,400&family=JetBrains+Mono&display=swap');
+
+        @font-face {
+            font-family: 'WDXL Lubrifont TC';
+            src: url('/WDXLLubrifontTC-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        :root {
+            --paper: #dccfb2;
+            --ink: #2d241e; 
+            --accent: #8b0000;
+        }
+
+        body {
+            background-color: #c4b496;
+            color: var(--ink);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        .texture-overlay {
+            position: fixed;
+            inset: 0;
+            background-image: url("https://www.transparenttextures.com/patterns/p6.png");
+            mix-blend-mode: multiply;
+            pointer-events: none;
+            opacity: 0.4;
+            z-index: 100;
+        }
+
+        .scroll-canvas {
+            background-color: var(--paper);
+            width: 100%;
+            max-width: 900px;
+            padding: 80px 60px;
+            position: relative;
+            box-shadow: 25px 25px 70px rgba(0,0,0,0.15);
+            clip-path: polygon(
+                0% 1%, 5% 0%, 95% 1%, 100% 0%, 
+                99% 98%, 94% 100%, 4% 99%, 0% 100%
+            );
+        }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            font-size: 0.65rem;
+            opacity: 0.7;
+        }
+
+        .production-note {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            line-height: 1.4;
+            opacity: 0.5;
+            border-left: 1px solid var(--ink);
+            padding-left: 12px;
+            margin-top: 10px;
+        }
+
+        .stamp {
+            width: 70px;
+            height: 70px;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.2rem;
+            transform: rotate(-12deg);
+            opacity: 0.7;
+            position: absolute;
+            right: 50px;
+            top: 50px;
+            mix-blend-mode: darken;
+            user-select: none;
+        }
+
+        /* Тот самый заголовок в одну строку с выделением */
+        .header-box {
+            border: 1px solid rgba(45, 36, 30, 0.15);
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        h1 {
+            font-weight: 900;
+            font-size: clamp(2.55rem, 9.35vw, 7.65rem);
+            text-transform: none;
+            letter-spacing: -0.01em;
+            line-height: 1;
+            display: block;
+            white-space: nowrap;
+            text-shadow: 0.5px 0.5px 0px rgba(255,255,255,0.3);
+        }
+
+        .category-title {
+            font-family: 'Yanone Kaffeesatz', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .category-title::after {
+            content: "";
+            flex-grow: 1;
+            height: 1px;
+            background: var(--ink);
+            opacity: 0.2;
+        }
+
+        .ink-line {
+            height: 1px;
+            background: var(--ink);
+            opacity: 0.1;
+            margin: 4rem 0;
+        }
+
+        .tea-entry {
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .tea-entry.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .tea-entry p.description {
+            font-family: 'Amatic SC', cursive;
+            font-size: 1.6rem;
+            font-style: normal;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .serif-italic {
+            font-family: 'Amatic SC', sans-serif;
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        .letterpress {
+            font-size: clamp(1.5rem, 4vw, 3rem) !important;
+            filter: contrast(110%) brightness(95%);
+            font-family: 'Yanone Kaffeesatz', sans-serif;
+            font-weight: 700;
+        }
+        .subtitle-mono {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            text-transform: lowercase;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="texture-overlay"></div>
+
+    <article class="scroll-canvas">
+        <div class="stamp">茶院</div>
+
+        <header class="mb-32">
+            <div class="mono mb-10 text-center">Est. 2024 / Catalog / Moscow</div>
+            
+            <div class="header-box">
+                <h1 class="letterpress">Чайная Лавка «Чайнань»</h1>
+            </div>
+
+            <p class="subtitle-mono max-w-2xl mx-auto text-center leading-relaxed">
+                для тех кто понимает чай
+            </p>
+        </header>
+
+        <main>
+            <div class="tea-entry">
+                <h3 class="category-title">Зелёный чай</h3>
+                <p class="description">Свежий, травянистый, иногда с морским или ореховым оттенком.</p>
+                <div class="production-note">
+                    Минимальная обработка, лист фиксируют сразу после сбора.<br>
+                    Сорта: Лун Цзин, Би Ло Чунь, Маофэн.
+                </div>
+            </div>
+
+            <div class="tea-entry">
+                <h3 class="category-title">Белый чай</h3>
+                <p class="description">Медовый, цветочный, очень мягкий. Самый деликатный вид.</p>
+                <div class="production-note">
+                    Листья просто вялят на воздухе без активного вмешательства.<br>
+                    Сорта: Байхао Иньчжэнь, Бай Му Дань.
+                </div>
+            </div>
+
+            <div class="tea-entry">
+                <h3 class="category-title">Жёлтый чай</h3>
+                <p class="description">Редкость. Похож на зелёный, но с выраженной мягкой сладостью.</p>
+                <div class="production-note">
+                    Технология «томления» (Мэнь Хуан) убирает излишнюю травянистость.<br>
+                    Сорт: Цзюнь Шань Инь Чжэнь.
+                </div>
+            </div>
+
+            <div class="tea-entry">
+                <h3 class="category-title">Улун</h3>
+                <p class="description">Огромный диапазон вкусов: от цветочного молочного до тёмного поджаристого.</p>
+                <div class="production-note">
+                    Частично окисленный чай (бирюзовый), находящийся между зелёным и красным.<br>
+                    Сорта: Те Гуань Инь, Да Хун Пао.
+                </div>
+            </div>
+
+            <div class="tea-entry">
+                <h3 class="category-title">Красный чай</h3>
+                <p class="description">Мёд, сухофрукты, шоколад. То, что на Западе называют «чёрным».</p>
+                <div class="production-note">
+                    Полностью окисленный лист, дающий насыщенный прогревающий настой.<br>
+                    Сорта: Дянь Хун, Цзинь Цзюнь Мэй, Дянь Хун Маофэн.
+                </div>
+            </div>
+
+            <div class="tea-entry">
+                <h3 class="category-title">Пуэр</h3>
+                <p class="description">Ферментированный и выдержанный. Чай с глубоким потенциалом старения.</p>
+                <div class="production-note">
+                    Шэн: живой, свежий, меняется с годами как вино.<br>
+                    Шу: ускоренная ферментация, ноты земли, леса и тёмного шоколада.<br>
+                    Сорта: Шэн Пуэр, Шу Пуэр.
+                </div>
+            </div>
+
+            <div class="tea-entry">
+                <h3 class="category-title">Чёрный чай</h3>
+                <p class="description">Постферментированные чаи с плотным, «старым» вкусом.</p>
+                <div class="production-note">
+                    Хэй Ча — отдельный вид (не пуэр), проходящий специфическую ферментацию в кучах.<br>
+                    Сорта: Люань, Фу Чжуань.
+                </div>
+            </div>
+        </main>
+
+        <div class="ink-line"></div>
+
+        <footer class="mt-24 grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div>
+                <div class="mono mb-6">Локация</div>
+                <div class="text-lg font-bold uppercase tracking-tighter">Ул. Мира, 10</div>
+                <div class="serif-italic opacity-60">Закрытый двор, вход по звонку</div>
+            </div>
+            <div class="md:text-right">
+                <div class="mono mb-6">Контакт</div>
+                <div class="text-lg font-bold uppercase tracking-tighter">@chainan_tea</div>
+                <div class="serif-italic opacity-60">Ежедневно до последнего гостя</div>
+            </div>
+        </footer>
+
+        <div class="mt-32 opacity-[0.02] select-none text-[8rem] font-black uppercase text-center leading-none tracking-[0.2em]">
+            TEA
+        </div>
+    </article>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.tea-entry').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
