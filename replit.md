@@ -12,8 +12,8 @@ This is a Flask web application for the Russian tea shop catalog “Чайнан
 
 ## Runtime
 
-- Development command: `python3 server.py`
-- Production command: `gunicorn --bind=0.0.0.0:5000 --reuse-port server:app`
+- Development command: `uv run python server.py`
+- Production command: `uv run gunicorn --bind=0.0.0.0:5000 --reuse-port server:app`
 - Web port: `5000`
 - The Flask server binds to `0.0.0.0` for Replit preview compatibility.
 
@@ -35,3 +35,4 @@ This is a Flask web application for the Russian tea shop catalog “Чайнан
 
 - Do not change existing finished site structures, global styles, or unrelated page text unless the user explicitly asks for those exact areas to be changed.
 - When editing a component or modal, limit changes to that component/modal and avoid touching global page styles.
+- The “Чайная пьянка” modal styling is the shared modal template for project/tea sections: dark `#372A22` background, paper texture stretched across the full modal, reduced paper visibility via overlay, same close/toggle behavior, and future section texts should be added into this existing modal system rather than creating a different style.

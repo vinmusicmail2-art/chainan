@@ -84,7 +84,7 @@
 
         .nav-panel {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.6rem;
+            font-size: 0.72rem;
             letter-spacing: 0.15em;
             text-transform: uppercase;
             border-top: 1px solid var(--ink);
@@ -107,15 +107,41 @@
             cursor: default;
         }
 
-        .tea-party-trigger {
+        .modal-trigger {
             cursor: pointer;
+        }
+
+        .nav-panel .modal-trigger {
             transition: transform 0.18s ease, opacity 0.18s ease;
             transform-origin: center;
         }
 
-        .tea-party-trigger:hover {
+        .nav-panel .modal-trigger:hover {
             opacity: 1;
             transform: scale(1.04);
+        }
+
+        .tea-entry.modal-trigger:hover .category-title {
+            opacity: 0.72;
+        }
+
+        .modal-more-button {
+            margin-top: 0.8rem;
+            border: 1px solid rgba(45, 36, 30, 0.45);
+            background: transparent;
+            color: var(--ink);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            padding: 0.35rem 0.7rem;
+            cursor: pointer;
+            transition: opacity 0.18s ease, transform 0.18s ease;
+        }
+
+        .modal-more-button:hover {
+            opacity: 0.68;
+            transform: translateY(-1px);
         }
 
         .tea-party-modal {
@@ -128,12 +154,13 @@
             overflow-y: auto;
             visibility: hidden;
             z-index: 300;
-            background-color: var(--paper);
+            background-color: #372A22;
             background-image:
-                linear-gradient(rgba(220, 207, 178, 0.06), rgba(220, 207, 178, 0.06)),
+                linear-gradient(rgba(55, 42, 34, 0.6), rgba(55, 42, 34, 0.6)),
                 url("/paper-bg.jpg");
-            background-size: cover;
-            background-position: center;
+            background-size: 100% 100%, 100% 100%;
+            background-position: center, center;
+            background-repeat: no-repeat, no-repeat;
             color: #fff;
             text-shadow:
                 0 0.3mm 0 #372A22,
@@ -252,7 +279,7 @@
             border-top: 1px solid var(--ink);
             padding-top: 0.6rem;
             margin-top: 0.3rem;
-            font-size: 0.66rem;
+            font-size: 0.792rem;
         }
 
         @media (max-width: 640px) {
@@ -518,21 +545,25 @@
         <h2 class="category-title" style="margin-bottom: 0.8rem;">Наши Проекты:</h2>
 
         <nav class="nav-panel">
-            <div class="nav-panel-item nav-panel-top">Клуб имени «Председателя С.» — беседы о чае, о философии и выздоровлении духа и тела</div>
+            <div class="nav-panel-item nav-panel-top modal-trigger" tabindex="0" role="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="chairman-club" data-modal-title="Клуб имени «Председателя С.»">Клуб имени «Председателя С.» — беседы о чае, о философии и выздоровлении духа и тела</div>
             <div class="nav-panel-row">
-                <div class="nav-panel-item">Чай на каждый день</div>
-                <div class="nav-panel-item">Чайная церемония —<br>проведение и обучение</div>
-                <div class="nav-panel-item tea-party-trigger" tabindex="0" role="button" aria-haspopup="dialog" aria-expanded="false">Чайная пьянка —<br>чайно-музыкальные вечера</div>
-                <div class="nav-panel-item" style="border-right:none">Распродажа</div>
+                <div class="nav-panel-item modal-trigger" tabindex="0" role="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="everyday-tea" data-modal-title="Чай на каждый день">Чай на каждый день</div>
+                <div class="nav-panel-item modal-trigger" tabindex="0" role="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="tea-ceremony" data-modal-title="Чайная церемония — проведение и обучение">Чайная церемония —<br>проведение и обучение</div>
+                <div class="nav-panel-item modal-trigger" tabindex="0" role="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="tea-party" data-modal-title="Чайная пьянка — чайно-музыкальные вечера">Чайная пьянка —<br>чайно-музыкальные вечера</div>
+                <div class="nav-panel-item modal-trigger" tabindex="0" role="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="sale" data-modal-title="Распродажа" style="border-right:none">Распродажа</div>
             </div>
-            <div class="nav-panel-bottom">Чай на заказ — для оптовых покупателей и эксклюзив для ценителей</div>
+            <div class="nav-panel-bottom modal-trigger" tabindex="0" role="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="custom-order" data-modal-title="Чай на заказ">Чай на заказ — для оптовых покупателей и эксклюзив для ценителей</div>
         </nav>
 
         <div class="tea-party-backdrop" aria-hidden="true"></div>
 
-        <div class="tea-party-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Чайная пьянка: китайский чай и музыка">
+        <div class="tea-party-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="">
             <button class="tea-party-modal-close" type="button" aria-label="Закрыть">×</button>
-            <h3>Чайная пьянка — чайно-музыкальные вечера</h3>
+            <h3 class="tea-party-modal-title"></h3>
+            <div class="tea-party-modal-body"></div>
+        </div>
+
+        <template id="modal-template-tea-party">
             <p><strong>Чайная пьянка: китайский чай и музыка</strong></p>
             <p>Гунфу Ча в неформальной обстановке. Пледы, подушки на пол, живой звук или атмосферный плейлист. Никакого пафоса.</p>
             <div class="tea-party-modal-section">
@@ -560,7 +591,7 @@
                 </ul>
             </div>
             <p><strong>Запись:</strong> @ваш_телеграм</p>
-        </div>
+        </template>
 
         <main>
             <div class="tea-entry">
@@ -572,6 +603,7 @@
                     Шу: ускоренная ферментация, ноты земли, леса и тёмного шоколада.<br>
                     Сорта в наличии: <span class="tea-varieties">Шэн Пуэр, Шу Пуэр</span>.
                 </div>
+                <button class="modal-more-button modal-trigger" type="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="puer" data-modal-title="Пуэр">подробнее</button>
             </div>
 
             <div class="tea-entry">
@@ -582,6 +614,7 @@
                     Частично окисленный чай (бирюзовый), находящийся между зелёным и красным.<br>
                     Сорта в наличии: <span class="tea-varieties">Те Гуань Инь, Да Хун Пао</span>.
                 </div>
+                <button class="modal-more-button modal-trigger" type="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="oolong" data-modal-title="Улун">подробнее</button>
             </div>
 
             <div class="tea-entry">
@@ -592,6 +625,7 @@
                     Минимальная обработка, лист фиксируют сразу после сбора.<br>
                     Сорта в наличии: <span class="tea-varieties">Лун Цзин, Би Ло Чунь, Маофэн</span>.
                 </div>
+                <button class="modal-more-button modal-trigger" type="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="green" data-modal-title="Зелёный чай">подробнее</button>
             </div>
 
             <div class="tea-entry">
@@ -602,6 +636,7 @@
                     Листья просто вялят на воздухе без активного вмешательства.<br>
                     Сорта в наличии: <span class="tea-varieties">Байхао Иньчжэнь, Бай Му Дань</span>.
                 </div>
+                <button class="modal-more-button modal-trigger" type="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="white" data-modal-title="Белый чай">подробнее</button>
             </div>
 
             <div class="tea-entry">
@@ -612,6 +647,7 @@
                     Технология «томления» (Мэнь Хуан) убирает излишнюю травянистость.<br>
                     Сорта в наличии: <span class="tea-varieties">Цзюнь Шань Инь Чжэнь</span>.
                 </div>
+                <button class="modal-more-button modal-trigger" type="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="yellow" data-modal-title="Жёлтый чай">подробнее</button>
             </div>
 
             <div class="tea-entry">
@@ -622,6 +658,7 @@
                     Полностью окисленный лист, дающий насыщенный прогревающий настой.<br>
                     Сорта в наличии: <span class="tea-varieties">Дянь Хун, Цзинь Цзюнь Мэй, Дянь Хун Маофэн</span>.
                 </div>
+                <button class="modal-more-button modal-trigger" type="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="red" data-modal-title="Красный чай">подробнее</button>
             </div>
 
             <div class="tea-entry">
@@ -632,6 +669,7 @@
                     Хэй Ча — отдельный вид (не пуэр), проходящий специфическую ферментацию в кучах.<br>
                     Сорта в наличии: <span class="tea-varieties">Люань, Фу Чжуань</span>.
                 </div>
+                <button class="modal-more-button modal-trigger" type="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="black" data-modal-title="Чёрный чай">подробнее</button>
             </div>
         </main>
 
@@ -667,17 +705,33 @@
 
         document.querySelectorAll('.tea-entry').forEach(el => observer.observe(el));
 
-        const teaPartyTrigger = document.querySelector('.tea-party-trigger');
+        const modalTriggers = document.querySelectorAll('.modal-trigger');
         const teaPartyModal = document.querySelector('.tea-party-modal');
         const teaPartyModalClose = document.querySelector('.tea-party-modal-close');
         const teaPartyBackdrop = document.querySelector('.tea-party-backdrop');
+        const teaPartyModalTitle = document.querySelector('.tea-party-modal-title');
+        const teaPartyModalBody = document.querySelector('.tea-party-modal-body');
+        let activeModalTrigger = null;
 
-        function openTeaPartyModal() {
+        function openTeaPartyModal(trigger) {
+            activeModalTrigger = trigger;
+            const title = trigger.dataset.modalTitle || trigger.textContent.trim();
+            const template = document.querySelector(`#modal-template-${trigger.dataset.modalKey}`);
+
+            teaPartyModalTitle.textContent = title;
+            teaPartyModalBody.replaceChildren();
+
+            if (template) {
+                teaPartyModalBody.appendChild(template.content.cloneNode(true));
+            }
+
             document.body.classList.add('tea-party-modal-open');
             teaPartyBackdrop.classList.add('is-open');
             teaPartyModal.classList.add('is-open');
             teaPartyModal.setAttribute('aria-hidden', 'false');
-            teaPartyTrigger.setAttribute('aria-expanded', 'true');
+            teaPartyModal.setAttribute('aria-label', title);
+            modalTriggers.forEach(item => item.setAttribute('aria-expanded', 'false'));
+            trigger.setAttribute('aria-expanded', 'true');
         }
 
         function closeTeaPartyModal() {
@@ -685,19 +739,29 @@
             teaPartyBackdrop.classList.remove('is-open');
             teaPartyModal.classList.remove('is-open');
             teaPartyModal.setAttribute('aria-hidden', 'true');
-            teaPartyTrigger.setAttribute('aria-expanded', 'false');
+            modalTriggers.forEach(item => item.setAttribute('aria-expanded', 'false'));
+            activeModalTrigger = null;
         }
 
-        teaPartyTrigger.addEventListener('click', event => {
-            if (event.target.closest('.tea-party-modal')) return;
-            openTeaPartyModal();
-        });
-
-        teaPartyTrigger.addEventListener('keydown', event => {
-            if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                openTeaPartyModal();
+        function toggleTeaPartyModal(trigger) {
+            if (teaPartyModal.classList.contains('is-open') && activeModalTrigger === trigger) {
+                closeTeaPartyModal();
+            } else {
+                openTeaPartyModal(trigger);
             }
+        }
+
+        modalTriggers.forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                toggleTeaPartyModal(trigger);
+            });
+
+            trigger.addEventListener('keydown', event => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    toggleTeaPartyModal(trigger);
+                }
+            });
         });
 
         teaPartyModalClose.addEventListener('click', event => {
@@ -713,7 +777,7 @@
 
         document.addEventListener('click', event => {
             if (!teaPartyModal.classList.contains('is-open')) return;
-            if (!teaPartyModal.contains(event.target) && !teaPartyTrigger.contains(event.target)) {
+            if (!teaPartyModal.contains(event.target) && !event.target.closest('.modal-trigger')) {
                 closeTeaPartyModal();
             }
         });
