@@ -1,38 +1,53 @@
 # Project Overview
 
-This is a Flask web application for the Russian tea shop catalog “Чайнань”. It serves static HTML/CSS/assets from the project root and exposes JSON API endpoints for reading and updating tea varieties stored in `teas.json`.
+Flask-based catalog website for Russian tea shop "Чайнань". Static HTML/CSS/assets served from project root with JSON API for content management.
 
 ## Stack
 
-- Python 3.12
-- Flask
+- Python 3.11
+- Flask + Werkzeug
 - Gunicorn for production serving
 - Static HTML pages (`index.html`, `admin.html`)
-- JSON file storage (`teas.json`)
+- Content stored in `content.json` (all site content) and `teas.json` (varieties, legacy sync)
 
-## Runtime
+## File Structure
 
-- Development command: `uv run python server.py`
-- Production command: `uv run gunicorn --bind=0.0.0.0:5000 --reuse-port server:app`
-- Web port: `5000`
-- The Flask server binds to `0.0.0.0` for Replit preview compatibility.
+- `index.html` — main public page (loads content dynamically from /api/content)
+- `admin.html` — CMS admin panel (login required, section dropdown, image upload)
+- `server.py` — Flask app with all API routes
+- `content.json` — unified content store: modals (image+html), teas (desc+note+varieties), footer
+- `teas.json` — tea varieties (auto-synced from content.json for backward compatibility)
+- `chairman.png` — chairman photo served as static file
 
-## Key Files
+## API Routes
 
-- `server.py`: Flask app, static file serving, and tea/admin API routes
-- `index.html`: Public tea catalog page
-- `admin.html`: Password-protected tea assortment editor
-- `teas.json`: Editable tea variety data
-- `pyproject.toml`: Python dependency declaration
-- `.replit`: Replit workflow and publishing configuration
+- `GET /api/content` — full content.json
+- `POST /api/content` — save full content (auth required), also syncs teas.json
+- `POST /api/upload` — upload image file, saves to root dir, returns URL (auth required)
+- `GET /api/teas` — tea varieties from teas.json
+- `POST /api/teas` — save varieties (auth required)
+- `POST /api/login` — session login
+- `POST /api/logout` — session logout
+- `GET /api/me` — check login status
 
-## Configuration
+## Admin Panel (`/admin`)
 
-- `SECRET_KEY`: Optional Flask session secret. Falls back to the current development default if unset.
-- `ADMIN_PASSWORD`: Optional admin login password. Falls back to the current development default if unset.
+- Login with password (env var `ADMIN_PASSWORD`, default `chainan2002`)
+- Section dropdown: 6 modal sections + 7 tea catalog entries + footer
+- **Modal sections**: image URL/upload + HTML textarea (empty = hardcoded template shown)
+- **Tea sections**: description + note (multi-line) + varieties (one per line → shown as comma list)
+- **Footer**: location + contact fields
+- Save applies changes immediately to live site
 
-## User Rules
+## Modal System
 
-- Do not change existing finished site structures, global styles, or unrelated page text unless the user explicitly asks for those exact areas to be changed.
-- When editing a component or modal, limit changes to that component/modal and avoid touching global page styles.
-- The “Чайная пьянка” modal styling is the shared modal template for project/tea sections: dark `#372A22` background, paper texture stretched across the full modal, reduced paper visibility via overlay, same close/toggle behavior, and future section texts should be added into this existing modal system rather than creating a different style.
+- All nav section buttons open a single modal (`.tea-party-modal`)
+- JS checks `siteContent.modals[key].html` first; falls back to hardcoded `<template>` elements
+- If admin has saved HTML for a modal, it overrides the template
+- `data-current-key` attribute used for CSS-targeting specific modals
+
+## Deployment
+
+- Gunicorn: `gunicorn --bind=0.0.0.0:5000 --reuse-port server:app`
+- Flask sessions (signed cookies, `SECRET_KEY` env var)
+- Content files (`content.json`, `teas.json`) must be writable in deployment

@@ -878,6 +878,20 @@
             <p><strong>Заказать сертификат:</strong> @ваш_телеграм</p>
         </template>
 
+        <template id="modal-template-everyday-tea">
+            <p><strong>Чай на каждый день — выбор и заварка</strong></p>
+            <p>Помогаем подобрать чай для ежедневного питья: вкусный, доступный и живой.</p>
+            <div class="tea-party-modal-section">
+                <p><strong>Как мы работаем:</strong></p>
+                <ul>
+                    <li>Рассказываем о сортах под ваш вкус и бюджет</li>
+                    <li>Даём попробовать перед покупкой</li>
+                    <li>Объясняем, как заваривать без лишних приборов</li>
+                </ul>
+            </div>
+            <p>Напишите нам — подберём то, что станет любимым.</p>
+        </template>
+
         <template id="modal-template-tea-party">
             <p><strong>Чайная пьянка: китайский чай и музыка</strong></p>
             <p>Гунфу Ча в неформальной обстановке. Пледы, подушки на пол, живой звук или атмосферный плейлист. Никакого пафоса.</p>
@@ -912,7 +926,7 @@
             <div class="tea-entry">
                 <div class="tea-watermark">普洱</div>
                 <h2 class="category-title">Пуэр</h2>
-                <p class="description">Ферментированный и выдержанный. Чай с глубоким потенциалом старения.</p>
+                <p class="description" data-tea-desc="puer">Ферментированный и выдержанный. Чай с глубоким потенциалом старения.</p>
                 <div class="production-note" data-tea="puer">
                     Шэн: живой, свежий, меняется с годами как вино.<br>
                     Шу: ускоренная ферментация, ноты земли, леса и тёмного шоколада.<br>
@@ -924,7 +938,7 @@
             <div class="tea-entry">
                 <div class="tea-watermark">乌龙</div>
                 <h2 class="category-title">Улун</h2>
-                <p class="description">Огромный диапазон вкусов: от цветочного молочного до тёмного поджаристого.</p>
+                <p class="description" data-tea-desc="oolong">Огромный диапазон вкусов: от цветочного молочного до тёмного поджаристого.</p>
                 <div class="production-note" data-tea="oolong">
                     Частично окисленный чай (бирюзовый), находящийся между зелёным и красным.<br>
                     Сорта в наличии: <span class="tea-varieties">Те Гуань Инь, Да Хун Пао</span>.
@@ -935,7 +949,7 @@
             <div class="tea-entry">
                 <div class="tea-watermark">绿茶</div>
                 <h2 class="category-title">Зелёный чай</h2>
-                <p class="description">Свежий, травянистый, иногда с морским или ореховым оттенком.</p>
+                <p class="description" data-tea-desc="green">Свежий, травянистый, иногда с морским или ореховым оттенком.</p>
                 <div class="production-note" data-tea="green">
                     Минимальная обработка, лист фиксируют сразу после сбора.<br>
                     Сорта в наличии: <span class="tea-varieties">Лун Цзин, Би Ло Чунь, Маофэн</span>.
@@ -946,7 +960,7 @@
             <div class="tea-entry">
                 <div class="tea-watermark">白茶</div>
                 <h2 class="category-title">Белый чай</h2>
-                <p class="description">Медовый, цветочный, очень мягкий. Самый деликатный вид.</p>
+                <p class="description" data-tea-desc="white">Медовый, цветочный, очень мягкий. Самый деликатный вид.</p>
                 <div class="production-note" data-tea="white">
                     Листья просто вялят на воздухе без активного вмешательства.<br>
                     Сорта в наличии: <span class="tea-varieties">Байхао Иньчжэнь, Бай Му Дань</span>.
@@ -957,7 +971,7 @@
             <div class="tea-entry">
                 <div class="tea-watermark">黄茶</div>
                 <h2 class="category-title">Жёлтый чай</h2>
-                <p class="description">Редкость. Похож на зелёный, но с выраженной мягкой сладостью.</p>
+                <p class="description" data-tea-desc="yellow">Редкость. Похож на зелёный, но с выраженной мягкой сладостью.</p>
                 <div class="production-note" data-tea="yellow">
                     Технология «томления» (Мэнь Хуан) убирает излишнюю травянистость.<br>
                     Сорта в наличии: <span class="tea-varieties">Цзюнь Шань Инь Чжэнь</span>.
@@ -968,7 +982,7 @@
             <div class="tea-entry">
                 <div class="tea-watermark">红茶</div>
                 <h2 class="category-title">Красный чай</h2>
-                <p class="description">Мёд, сухофрукты, шоколад. То, что на Западе называют «чёрным».</p>
+                <p class="description" data-tea-desc="red">Мёд, сухофрукты, шоколад. То, что на Западе называют «чёрным».</p>
                 <div class="production-note" data-tea="red">
                     Полностью окисленный лист, дающий насыщенный прогревающий настой.<br>
                     Сорта в наличии: <span class="tea-varieties">Дянь Хун, Цзинь Цзюнь Мэй, Дянь Хун Маофэн</span>.
@@ -979,7 +993,7 @@
             <div class="tea-entry">
                 <div class="tea-watermark">黑茶</div>
                 <h2 class="category-title">Чёрный чай</h2>
-                <p class="description">Постферментированные чаи с плотным, «старым» вкусом.</p>
+                <p class="description" data-tea-desc="black">Постферментированные чаи с плотным, «старым» вкусом.</p>
                 <div class="production-note" data-tea="black">
                     Хэй Ча — отдельный вид (не пуэр), проходящий специфическую ферментацию в кучах.<br>
                     Сорта в наличии: <span class="tea-varieties">Люань, Фу Чжуань</span>.
@@ -993,11 +1007,11 @@
         <footer class="mt-24 grid grid-cols-1 md:grid-cols-2 gap-12">
             <div>
                 <div class="mono mb-6">Локация</div>
-                <a href="https://maps.google.com/?q=Пушкинская+улица+118А+Ростов-на-Дону" target="_blank" rel="noopener" class="text-lg font-bold uppercase tracking-tighter" style="color:inherit;text-decoration:none;display:inline-block;transition:transform 0.18s ease,opacity 0.18s ease;" onmouseover="this.style.transform='scale(1.05)';this.style.opacity='0.75'" onmouseout="this.style.transform='scale(1)';this.style.opacity='1'">Пушкинская улица, 118А</a>
+                <a href="https://maps.google.com/?q=Пушкинская+улица+118А+Ростов-на-Дону" target="_blank" rel="noopener" class="text-lg font-bold uppercase tracking-tighter" style="color:inherit;text-decoration:none;display:inline-block;transition:transform 0.18s ease,opacity 0.18s ease;" onmouseover="this.style.transform='scale(1.05)';this.style.opacity='0.75'" onmouseout="this.style.transform='scale(1)';this.style.opacity='1'" id="footer-location">Пушкинская улица, 118А</a>
             </div>
             <div class="md:text-right">
                 <div class="mono mb-6">Контакт</div>
-                <div class="text-lg font-bold uppercase tracking-tighter">@chainan_tea</div>
+                <div class="text-lg font-bold uppercase tracking-tighter" id="footer-contact">@chainan_tea</div>
                 <div class="serif-italic opacity-60">Ежедневно до последнего гостя</div>
             </div>
         </footer>
@@ -1026,18 +1040,53 @@
         const teaPartyModalTitle = document.querySelector('.tea-party-modal-title');
         const teaPartyModalBody = document.querySelector('.tea-party-modal-body');
         let activeModalTrigger = null;
+        let siteContent = { modals: {}, teas: {}, footer: {} };
 
         function openTeaPartyModal(trigger) {
             activeModalTrigger = trigger;
+            const key = trigger.dataset.modalKey;
             const title = trigger.dataset.modalTitle || trigger.textContent.trim();
-            const template = document.querySelector(`#modal-template-${trigger.dataset.modalKey}`);
 
             teaPartyModalTitle.textContent = title;
-            teaPartyModal.setAttribute('data-current-key', trigger.dataset.modalKey);
+            teaPartyModal.setAttribute('data-current-key', key);
             teaPartyModalBody.replaceChildren();
 
-            if (template) {
-                teaPartyModalBody.appendChild(template.content.cloneNode(true));
+            const modalData = siteContent.modals && siteContent.modals[key];
+            if (modalData && modalData.html) {
+                teaPartyModalBody.innerHTML = modalData.html;
+                if (modalData.image) {
+                    const img = document.createElement('img');
+                    img.src = modalData.image;
+                    img.alt = title;
+                    img.style.cssText = 'width:100%;max-width:256px;display:block;margin:0 auto 1.2rem;border-radius:2px;opacity:0.93;';
+                    teaPartyModalBody.insertBefore(img, teaPartyModalBody.firstChild);
+                }
+            } else {
+                const template = document.querySelector(`#modal-template-${key}`);
+                if (template) {
+                    teaPartyModalBody.appendChild(template.content.cloneNode(true));
+                } else {
+                    const teaData = siteContent.teas && siteContent.teas[key];
+                    if (teaData) {
+                        if (teaData.description) {
+                            const p = document.createElement('p');
+                            p.textContent = teaData.description;
+                            teaPartyModalBody.appendChild(p);
+                        }
+                        if (teaData.note) {
+                            const note = document.createElement('div');
+                            note.className = 'tea-party-modal-section';
+                            note.innerHTML = teaData.note.replace(/\n/g, '<br>');
+                            teaPartyModalBody.appendChild(note);
+                        }
+                        if (teaData.varieties && teaData.varieties.length) {
+                            const varsDiv = document.createElement('div');
+                            varsDiv.className = 'tea-party-modal-section';
+                            varsDiv.innerHTML = '<strong>Сорта в наличии:</strong> ' + teaData.varieties.join(', ');
+                            teaPartyModalBody.appendChild(varsDiv);
+                        }
+                    }
+                }
             }
 
             document.body.classList.add('tea-party-modal-open');
@@ -1067,10 +1116,7 @@
         }
 
         modalTriggers.forEach(trigger => {
-            trigger.addEventListener('click', () => {
-                toggleTeaPartyModal(trigger);
-            });
-
+            trigger.addEventListener('click', () => toggleTeaPartyModal(trigger));
             trigger.addEventListener('keydown', event => {
                 if (event.key === 'Enter' || event.key === ' ') {
                     event.preventDefault();
@@ -1097,20 +1143,53 @@
             }
         });
 
-        // Динамическая загрузка сортов в наличии
-        fetch('/api/teas')
+        function applyContent() {
+            const teas = siteContent.teas || {};
+            const footer = siteContent.footer || {};
+
+            document.querySelectorAll('[data-tea-desc]').forEach(el => {
+                const key = el.dataset.teaDesc;
+                if (teas[key] && teas[key].description) {
+                    el.textContent = teas[key].description;
+                }
+            });
+
+            document.querySelectorAll('.production-note[data-tea]').forEach(note => {
+                const key = note.getAttribute('data-tea');
+                if (teas[key]) {
+                    const noteLines = (teas[key].note || '').replace(/\n/g, '<br>');
+                    const varieties = (teas[key].varieties || []).join(', ') || '—';
+                    note.innerHTML = `${noteLines}<br>Сорта в наличии: <span class="tea-varieties">${varieties}</span>.`;
+                }
+            });
+
+            const locEl = document.getElementById('footer-location');
+            if (locEl && footer.location) {
+                locEl.textContent = footer.location;
+                locEl.href = `https://maps.google.com/?q=${encodeURIComponent(footer.location)}`;
+            }
+
+            const contEl = document.getElementById('footer-contact');
+            if (contEl && footer.contact) {
+                contEl.textContent = footer.contact;
+            }
+        }
+
+        fetch('/api/content')
             .then(r => r.json())
-            .then(teas => {
-                document.querySelectorAll('.production-note[data-tea]').forEach(note => {
-                    const key = note.getAttribute('data-tea');
-                    const span = note.querySelector('.tea-varieties');
-                    if (span && teas[key]) {
-                        const list = teas[key];
-                        span.textContent = list.length ? list.join(', ') : '—';
-                    }
-                });
+            .then(data => {
+                siteContent = data;
+                applyContent();
             })
-            .catch(() => {}); // если API недоступно — показывается дефолтный текст
+            .catch(() => {
+                fetch('/api/teas').then(r => r.json()).then(teas => {
+                    document.querySelectorAll('.production-note[data-tea]').forEach(note => {
+                        const key = note.getAttribute('data-tea');
+                        const span = note.querySelector('.tea-varieties');
+                        if (span && teas[key]) span.textContent = teas[key].join(', ') || '—';
+                    });
+                }).catch(() => {});
+            });
     </script>
 </body>
 </html>

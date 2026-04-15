@@ -3,18 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Чайнань — Управление ассортиментом</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Yanone+Kaffeesatz:wght@400;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+    <title>Чайнань — Управление сайтом</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Yanone+Kaffeesatz:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        :root {
-            --paper: #dccfb2;
-            --ink: #2d241e;
-            --accent: #372A22;
-            --red: #8b3a2a;
-        }
+        :root { --paper: #dccfb2; --ink: #2d241e; --red: #8b3a2a; --ok: #2a5e2a; }
 
         body {
             background-color: var(--paper);
@@ -22,15 +15,12 @@
             font-family: 'JetBrains Mono', monospace;
             min-height: 100vh;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
-            padding: 2rem 1rem;
+            padding: 2rem 1rem 4rem;
         }
 
-        .container {
-            width: 100%;
-            max-width: 680px;
-        }
+        .container { width: 100%; max-width: 720px; }
 
         .mono-label {
             font-size: 0.6rem;
@@ -46,38 +36,43 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            margin-bottom: 0.25rem;
         }
 
-        .divider {
-            border: none;
-            border-top: 1px solid var(--ink);
-            margin: 1.5rem 0;
-        }
+        hr { border: none; border-top: 1px solid var(--ink); margin: 1.5rem 0; }
 
-        /* --- LOGIN SCREEN --- */
-        #login-screen {
-            text-align: center;
-        }
-
-        #login-screen h1 { margin-bottom: 1.5rem; }
-
-        .input-group {
-            margin-bottom: 1rem;
-            text-align: left;
-        }
-
-        input[type="password"], input[type="text"] {
+        input[type="password"],
+        input[type="text"],
+        select,
+        textarea {
             width: 100%;
             background: transparent;
             border: none;
             border-bottom: 1px solid var(--ink);
             padding: 0.5rem 0;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: var(--ink);
             outline: none;
         }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%232d241e'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 4px center;
+            padding-right: 20px;
+        }
+
+        textarea {
+            border: 1px solid rgba(45,36,30,0.35);
+            padding: 0.5rem 0.7rem;
+            resize: vertical;
+            line-height: 1.6;
+            font-size: 0.82rem;
+        }
+
+        textarea:focus { border-color: var(--ink); }
 
         button {
             font-family: 'JetBrains Mono', monospace;
@@ -89,18 +84,21 @@
             border: none;
             padding: 0.7rem 2rem;
             cursor: pointer;
-            margin-top: 1rem;
         }
 
         button:hover { opacity: 0.8; }
 
-        .btn-secondary {
+        .btn-outline {
             background: transparent;
             color: var(--ink);
             border: 1px solid var(--ink);
             font-size: 0.6rem;
             padding: 0.5rem 1.2rem;
-            margin-top: 0;
+        }
+
+        .btn-sm {
+            padding: 0.4rem 1rem;
+            font-size: 0.58rem;
         }
 
         .error-msg {
@@ -111,8 +109,39 @@
             min-height: 1rem;
         }
 
-        /* --- ADMIN PANEL --- */
-        #admin-screen { display: none; }
+        .field-block { margin-bottom: 1.4rem; }
+
+        .field-label {
+            font-size: 0.6rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            opacity: 0.6;
+            margin-bottom: 0.4rem;
+        }
+
+        .field-hint {
+            font-size: 0.58rem;
+            opacity: 0.45;
+            margin-top: 0.3rem;
+            letter-spacing: 0.05em;
+            line-height: 1.5;
+        }
+
+        .image-row {
+            display: flex;
+            gap: 0.6rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .image-row input { flex: 1; min-width: 160px; }
+
+        #image-preview {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            opacity: 0.85;
+        }
 
         .top-bar {
             display: flex;
@@ -121,41 +150,16 @@
             margin-bottom: 0.5rem;
         }
 
-        .tea-block {
-            margin-bottom: 1.5rem;
-        }
-
-        .tea-name {
-            font-family: 'Yanone Kaffeesatz', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 700;
+        .section-type-badge {
+            display: inline-block;
+            font-size: 0.55rem;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
-            letter-spacing: 0.08em;
-            margin-bottom: 0.3rem;
+            border: 1px solid rgba(45,36,30,0.35);
+            padding: 0.15rem 0.5rem;
+            margin-bottom: 1.2rem;
+            opacity: 0.6;
         }
-
-        .tea-hint {
-            font-size: 0.58rem;
-            opacity: 0.5;
-            letter-spacing: 0.1em;
-            margin-bottom: 0.4rem;
-        }
-
-        textarea {
-            width: 100%;
-            background: transparent;
-            border: 1px solid rgba(45,36,30,0.3);
-            padding: 0.5rem 0.7rem;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            color: var(--ink);
-            resize: vertical;
-            min-height: 60px;
-            outline: none;
-            line-height: 1.6;
-        }
-
-        textarea:focus { border-color: var(--ink); }
 
         .save-bar {
             position: sticky;
@@ -166,158 +170,313 @@
             display: flex;
             align-items: center;
             gap: 1.5rem;
+            margin-top: 2rem;
         }
 
-        .status-msg {
-            font-size: 0.6rem;
-            letter-spacing: 0.15em;
-            opacity: 0.7;
-        }
+        .status-msg { font-size: 0.6rem; letter-spacing: 0.1em; }
+        .status-ok  { color: var(--ok); }
+        .status-err { color: var(--red); }
 
-        .status-msg.ok { color: #2a5e2a; }
-        .status-msg.err { color: var(--red); }
+        #upload-file { display: none; }
+
+        /* Login */
+        #login-wrap { text-align: center; }
+        #login-wrap h1 { margin-bottom: 1.5rem; }
+        .input-group { margin-bottom: 1rem; text-align: left; }
     </style>
 </head>
 <body>
 <div class="container">
 
     <!-- LOGIN -->
-    <div id="login-screen">
+    <div id="login-wrap">
         <div class="mono-label">Чайнань / Панель управления</div>
         <h1>Вход</h1>
-        <hr class="divider">
+        <hr>
         <div class="input-group">
             <div class="mono-label">Пароль</div>
-            <input type="password" id="password-input" placeholder="введите пароль" autocomplete="current-password">
+            <input type="password" id="pw" placeholder="введите пароль">
         </div>
-        <div class="error-msg" id="login-error"></div>
-        <button onclick="doLogin()">Войти</button>
+        <div class="error-msg" id="login-err"></div>
+        <button id="login-btn">Войти</button>
     </div>
 
-    <!-- ADMIN PANEL -->
-    <div id="admin-screen">
+    <!-- ADMIN (hidden until login) -->
+    <div id="admin-wrap" style="display:none">
         <div class="top-bar">
             <div>
                 <div class="mono-label">Чайнань / Панель управления</div>
-                <h1>Ассортимент</h1>
+                <h1>Редактор сайта</h1>
             </div>
-            <button class="btn-secondary" onclick="doLogout()">Выйти</button>
+            <button class="btn-outline" id="logout-btn">Выйти</button>
         </div>
-        <hr class="divider">
+        <hr>
 
-        <div class="mono-label" style="margin-bottom:1.2rem;">Каждый сорт — с новой строки. Пустые строки игнорируются.</div>
+        <div class="field-block">
+            <div class="field-label">Раздел</div>
+            <select id="section-sel">
+                <optgroup label="Навигация — модальные окна">
+                    <option value="modal|chairman-club">Клуб имени «Председателя С.»</option>
+                    <option value="modal|everyday-tea">Чай на каждый день</option>
+                    <option value="modal|tea-ceremony">Чайная церемония — проведение и обучение</option>
+                    <option value="modal|tea-party">Чайная пьянка — чайно-музыкальные вечера</option>
+                    <option value="modal|sale">Распродажа / Подарочные сертификаты</option>
+                    <option value="modal|custom-order">Чай на заказ — опт и эксклюзив</option>
+                </optgroup>
+                <optgroup label="Чайный каталог">
+                    <option value="tea|puer">Пуэр</option>
+                    <option value="tea|oolong">Улун</option>
+                    <option value="tea|green">Зелёный чай</option>
+                    <option value="tea|white">Белый чай</option>
+                    <option value="tea|yellow">Жёлтый чай</option>
+                    <option value="tea|red">Красный чай</option>
+                    <option value="tea|black">Чёрный чай</option>
+                </optgroup>
+                <optgroup label="Контакты">
+                    <option value="footer|footer">Адрес и контакт</option>
+                </optgroup>
+            </select>
+        </div>
 
-        <div id="teas-form"></div>
+        <hr>
+
+        <!-- MODAL FORM -->
+        <div id="f-modal">
+            <div class="section-type-badge">Модальное окно</div>
+
+            <div class="field-block">
+                <div class="field-label">Изображение</div>
+                <div class="image-row">
+                    <input type="text" id="m-image" placeholder="/chairman.png или пусто">
+                    <button class="btn-outline btn-sm" id="upload-btn">Загрузить</button>
+                    <img id="image-preview" src="" alt="" style="display:none">
+                </div>
+                <div class="field-hint">Загрузите файл или вставьте URL. Пусто — без изображения.</div>
+                <input type="file" id="upload-file" accept="image/*">
+            </div>
+
+            <div class="field-block">
+                <div class="field-label">Содержимое (HTML)</div>
+                <textarea id="m-html" rows="14" placeholder="Введите HTML-содержимое раздела...&#10;&#10;Пример:&#10;&lt;p&gt;Текст абзаца&lt;/p&gt;&#10;&lt;ul&gt;&lt;li&gt;Пункт списка&lt;/li&gt;&lt;/ul&gt;"></textarea>
+                <div class="field-hint">Пусто = показывается стандартный текст. Поддерживается HTML: &lt;p&gt;, &lt;ul&gt;, &lt;li&gt;, &lt;strong&gt;, &lt;em&gt; и др.</div>
+            </div>
+        </div>
+
+        <!-- TEA FORM -->
+        <div id="f-tea" style="display:none">
+            <div class="section-type-badge">Чайный каталог</div>
+
+            <div class="field-block">
+                <div class="field-label">Описание (строка под заголовком)</div>
+                <input type="text" id="t-desc" placeholder="Краткое описание чая...">
+            </div>
+
+            <div class="field-block">
+                <div class="field-label">Дополнительная информация</div>
+                <textarea id="t-note" rows="4" placeholder="Факты о чае. Каждый факт — с новой строки."></textarea>
+                <div class="field-hint">Каждая строка — отдельная фраза. Отображается под описанием.</div>
+            </div>
+
+            <div class="field-block">
+                <div class="field-label">Сорта в наличии</div>
+                <textarea id="t-vars" rows="6" placeholder="Шэн Пуэр&#10;Шу Пуэр&#10;..."></textarea>
+                <div class="field-hint">Каждый сорт — с новой строки. На сайте отображаются через запятую: «Сорта в наличии: X, Y, Z».</div>
+            </div>
+        </div>
+
+        <!-- FOOTER FORM -->
+        <div id="f-footer" style="display:none">
+            <div class="section-type-badge">Контакты</div>
+
+            <div class="field-block">
+                <div class="field-label">Адрес</div>
+                <input type="text" id="fo-loc" placeholder="Пушкинская улица, 118А">
+                <div class="field-hint">Показывается внизу страницы. Нажатие открывает Google Maps.</div>
+            </div>
+
+            <div class="field-block">
+                <div class="field-label">Контакт</div>
+                <input type="text" id="fo-con" placeholder="@chainan_tea">
+            </div>
+        </div>
 
         <div class="save-bar">
-            <button onclick="saveTeas()">Сохранить</button>
-            <span class="status-msg" id="save-status"></span>
+            <button id="save-btn">Сохранить</button>
+            <span class="status-msg" id="status"></span>
         </div>
     </div>
 
 </div>
-
 <script>
-    const TEA_LABELS = {
-        puer:   'Пуэр',
-        oolong: 'Улун',
-        green:  'Зелёный чай',
-        white:  'Белый чай',
-        yellow: 'Жёлтый чай',
-        red:    'Красный чай',
-        black:  'Чёрный чай'
-    };
+var content = { modals: {}, teas: {}, footer: {} };
 
-    let currentTeas = {};
+function show(id) { document.getElementById(id).style.display = 'block'; }
+function hide(id) { document.getElementById(id).style.display = 'none'; }
+function val(id) { return document.getElementById(id).value; }
+function setVal(id, v) { document.getElementById(id).value = v || ''; }
 
-    async function init() {
-        const res = await fetch('/api/me');
-        const data = await res.json();
-        if (data.logged_in) {
-            showAdmin();
-        }
+function status(msg, cls) {
+    var el = document.getElementById('status');
+    el.textContent = msg;
+    el.className = 'status-msg' + (cls ? ' ' + cls : '');
+    if (cls === 'status-ok') setTimeout(function() { el.textContent = ''; }, 4000);
+}
+
+function getSel() {
+    var raw = val('section-sel');
+    var parts = raw.split('|');
+    return { type: parts[0], key: parts[1] };
+}
+
+function loadForm() {
+    var s = getSel();
+    hide('f-modal'); hide('f-tea'); hide('f-footer');
+    document.getElementById('status').textContent = '';
+
+    if (s.type === 'modal') {
+        show('f-modal');
+        var d = (content.modals && content.modals[s.key]) || {};
+        setVal('m-html', d.html);
+        setVal('m-image', d.image);
+        updatePreview();
+
+    } else if (s.type === 'tea') {
+        show('f-tea');
+        var d = (content.teas && content.teas[s.key]) || {};
+        setVal('t-desc', d.description);
+        setVal('t-note', d.note);
+        setVal('t-vars', d.varieties ? d.varieties.join('\n') : '');
+
+    } else if (s.type === 'footer') {
+        show('f-footer');
+        setVal('fo-loc', content.footer && content.footer.location);
+        setVal('fo-con', content.footer && content.footer.contact);
+    }
+}
+
+function updatePreview() {
+    var url = val('m-image').trim();
+    var img = document.getElementById('image-preview');
+    if (url) { img.src = url; img.style.display = 'block'; }
+    else { img.style.display = 'none'; }
+}
+
+function doSave() {
+    var s = getSel();
+    if (s.type === 'modal') {
+        if (!content.modals) content.modals = {};
+        content.modals[s.key] = {
+            html: val('m-html'),
+            image: val('m-image').trim() || null
+        };
+    } else if (s.type === 'tea') {
+        if (!content.teas) content.teas = {};
+        content.teas[s.key] = {
+            description: val('t-desc').trim(),
+            note: val('t-note').trim(),
+            varieties: val('t-vars').split('\n').map(function(s){ return s.trim(); }).filter(Boolean)
+        };
+    } else if (s.type === 'footer') {
+        content.footer = {
+            location: val('fo-loc').trim(),
+            contact: val('fo-con').trim()
+        };
     }
 
-    async function doLogin() {
-        const pw = document.getElementById('password-input').value;
-        const err = document.getElementById('login-error');
-        err.textContent = '';
-        const res = await fetch('/api/login', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({password: pw})
-        });
-        if (res.ok) {
-            showAdmin();
+    status('Сохраняю...', '');
+    fetch('/api/content', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(content)
+    })
+    .then(function(r) {
+        if (r.ok) { status('✓ Сохранено — сайт обновлён', 'status-ok'); }
+        else { r.text().then(function(t){ status('Ошибка: ' + t, 'status-err'); }); }
+    })
+    .catch(function(e) { status('Ошибка соединения', 'status-err'); });
+}
+
+function doUpload(file) {
+    if (!file) return;
+    var fd = new FormData();
+    fd.append('file', file);
+    status('Загружаю изображение...', '');
+    fetch('/api/upload', { method: 'POST', body: fd })
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+        if (d.ok) {
+            setVal('m-image', d.url);
+            updatePreview();
+            status('✓ Загружено: ' + d.url, 'status-ok');
         } else {
-            err.textContent = 'Неверный пароль';
+            status('Ошибка: ' + d.error, 'status-err');
         }
-    }
+    })
+    .catch(function() { status('Ошибка загрузки файла', 'status-err'); });
+}
 
-    async function doLogout() {
-        await fetch('/api/logout', {method: 'POST'});
-        document.getElementById('admin-screen').style.display = 'none';
-        document.getElementById('login-screen').style.display = '';
-        document.getElementById('password-input').value = '';
-    }
-
-    async function showAdmin() {
-        document.getElementById('login-screen').style.display = 'none';
-        document.getElementById('admin-screen').style.display = '';
-        const res = await fetch('/api/teas');
-        currentTeas = await res.json();
-        renderForm();
-    }
-
-    function renderForm() {
-        const form = document.getElementById('teas-form');
-        form.innerHTML = '';
-        for (const [key, label] of Object.entries(TEA_LABELS)) {
-            const varieties = (currentTeas[key] || []).join('\n');
-            form.innerHTML += `
-                <div class="tea-block">
-                    <div class="tea-name">${label}</div>
-                    <div class="tea-hint">Сорта в наличии</div>
-                    <textarea id="tea-${key}" rows="3">${varieties}</textarea>
-                </div>`;
-        }
-    }
-
-    async function saveTeas() {
-        const status = document.getElementById('save-status');
-        status.textContent = 'Сохраняю...';
-        status.className = 'status-msg';
-
-        const updated = {};
-        for (const key of Object.keys(TEA_LABELS)) {
-            const raw = document.getElementById(`tea-${key}`).value;
-            updated[key] = raw.split('\n').map(s => s.trim()).filter(Boolean);
-        }
-
-        const res = await fetch('/api/teas', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(updated)
-        });
-
-        if (res.ok) {
-            currentTeas = updated;
-            status.textContent = '✓ Сохранено';
-            status.className = 'status-msg ok';
-            setTimeout(() => { status.textContent = ''; }, 3000);
-        } else {
-            status.textContent = 'Ошибка при сохранении';
-            status.className = 'status-msg err';
-        }
-    }
-
-    // Enter на поле пароля
-    document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('password-input').addEventListener('keydown', e => {
-            if (e.key === 'Enter') doLogin();
-        });
-        init();
+function showAdmin() {
+    hide('login-wrap');
+    show('admin-wrap');
+    fetch('/api/content')
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+        content = d;
+        if (!content.modals) content.modals = {};
+        if (!content.teas) content.teas = {};
+        if (!content.footer) content.footer = {};
+        loadForm();
+    })
+    .catch(function() {
+        // Even if content fails to load, show the form
+        loadForm();
     });
+}
+
+// Events
+document.getElementById('login-btn').onclick = function() {
+    var pw = val('pw');
+    document.getElementById('login-err').textContent = '';
+    fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: pw })
+    })
+    .then(function(r) {
+        if (r.ok) { showAdmin(); }
+        else { document.getElementById('login-err').textContent = 'Неверный пароль'; }
+    })
+    .catch(function() { document.getElementById('login-err').textContent = 'Ошибка соединения'; });
+};
+
+document.getElementById('pw').onkeydown = function(e) {
+    if (e.key === 'Enter') document.getElementById('login-btn').click();
+};
+
+document.getElementById('logout-btn').onclick = function() {
+    fetch('/api/logout', { method: 'POST' }).finally(function() {
+        hide('admin-wrap');
+        show('login-wrap');
+        setVal('pw', '');
+    });
+};
+
+document.getElementById('section-sel').onchange = loadForm;
+document.getElementById('save-btn').onclick = doSave;
+document.getElementById('upload-btn').onclick = function() {
+    document.getElementById('upload-file').click();
+};
+document.getElementById('upload-file').onchange = function() {
+    doUpload(this.files[0]);
+    this.value = '';
+};
+document.getElementById('m-image').oninput = updatePreview;
+
+// Check if already logged in
+fetch('/api/me')
+.then(function(r) { return r.json(); })
+.then(function(d) { if (d.logged_in) showAdmin(); })
+.catch(function() {});
 </script>
 </body>
 </html>
