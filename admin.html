@@ -151,7 +151,8 @@
 
         .image-row input { flex: 1; min-width: 160px; }
 
-        #image-preview {
+        #image-preview,
+        #video-preview {
             width: 60px;
             height: 60px;
             object-fit: cover;
@@ -206,6 +207,21 @@
             letter-spacing: 0.05em;
         }
 
+        .action-heading button {
+            width: 100%;
+            margin-top: 0.7rem;
+        }
+
+        .action-help {
+            font-size: 0.6rem;
+            line-height: 1.55;
+            letter-spacing: 0.06em;
+            opacity: 0.62;
+            margin: -0.8rem 0 1.4rem;
+            border-left: 1px solid rgba(45,36,30,0.35);
+            padding-left: 0.8rem;
+        }
+
         .save-bar {
             position: sticky;
             bottom: 0;
@@ -230,6 +246,51 @@
             margin: 0 0 1.2rem;
             border: 1px solid rgba(139,58,42,0.35);
             padding: 0.7rem;
+        }
+
+        .trash-panel {
+            border: 1px solid rgba(45,36,30,0.35);
+            padding: 1rem;
+            margin: 1.2rem 0 1.5rem;
+            background: rgba(45,36,30,0.04);
+        }
+
+        .trash-title {
+            font-family: 'Yanone Kaffeesatz', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 0.4rem;
+        }
+
+        .trash-hint {
+            font-size: 0.58rem;
+            line-height: 1.5;
+            letter-spacing: 0.05em;
+            opacity: 0.55;
+            margin-bottom: 0.8rem;
+        }
+
+        .trash-empty {
+            font-size: 0.65rem;
+            opacity: 0.55;
+            letter-spacing: 0.06em;
+        }
+
+        .trash-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.8rem;
+            padding: 0.6rem 0;
+            border-top: 1px solid rgba(45,36,30,0.18);
+        }
+
+        .trash-item-name {
+            font-size: 0.68rem;
+            letter-spacing: 0.06em;
+            line-height: 1.45;
         }
 
         #upload-file { display: none; }
@@ -276,15 +337,22 @@
             <div class="action-heading">
                 <h2>Добавить</h2>
                 <p>Заполните пустой или скрытый раздел и нажмите «Сохранить».</p>
+                <button class="btn-outline btn-sm" id="add-mode-btn" type="button">Добавить</button>
             </div>
             <div class="action-heading">
                 <h2>Удалить</h2>
                 <p>Выберите раздел и нажмите кнопку «Удалить».</p>
+                <button class="btn-danger btn-sm" id="delete-mode-btn" type="button">Удалить</button>
             </div>
             <div class="action-heading">
                 <h2>Редактировать</h2>
                 <p>Выберите нужный раздел, измените текст и сохраните.</p>
+                <button class="btn-outline btn-sm" id="edit-mode-btn" type="button">Редактировать</button>
             </div>
+        </div>
+
+        <div class="action-help" id="action-help">
+            Режим редактирования: выберите раздел, измените поля и нажмите «Сохранить».
         </div>
 
         <div class="field-block">
@@ -316,6 +384,12 @@
             </select>
         </div>
 
+        <div class="trash-panel">
+            <div class="trash-title">Корзина</div>
+            <div class="trash-hint">Здесь отображаются удалённые материалы. Нажмите «Восстановить», чтобы вернуть раздел на сайт.</div>
+            <div id="trash-list"></div>
+        </div>
+
         <hr>
 
         <div class="deleted-note" id="deleted-note">Этот раздел сейчас скрыт на сайте. Заполните поля и нажмите «Сохранить», чтобы вернуть его.</div>
@@ -328,11 +402,23 @@
                 <div class="field-label">Изображение</div>
                 <div class="image-row">
                     <input type="text" id="m-image" placeholder="/chairman.png или пусто">
-                    <button class="btn-outline btn-sm" id="upload-btn">Загрузить</button>
+                    <button class="btn-outline btn-sm" id="upload-img-btn" type="button">Загрузить изображение</button>
+                    <button class="btn-danger btn-sm" id="remove-img-btn" type="button">Удалить изображение</button>
                     <img id="image-preview" src="" alt="" style="display:none">
                 </div>
-                <div class="field-hint">Загрузите файл или вставьте URL. Пусто — без изображения.</div>
-                <input type="file" id="upload-file" accept="image/*">
+                <div class="field-hint">Загрузите файл, вставьте URL или нажмите «Удалить изображение», чтобы убрать картинку из выбранного раздела.</div>
+            </div>
+
+            <div class="field-block">
+                <div class="field-label">Видео</div>
+                <div class="image-row">
+                    <input type="text" id="m-video" placeholder="/video.mp4 или пусто">
+                    <button class="btn-outline btn-sm" id="upload-video-btn" type="button">Загрузить видео</button>
+                    <button class="btn-danger btn-sm" id="remove-video-btn" type="button">Удалить видео</button>
+                    <video id="video-preview" src="" style="display:none" muted controls></video>
+                </div>
+                <div class="field-hint">Поддерживаются видео до 100 МБ: mp4, webm, mov, ogv. Нажмите «Удалить видео», чтобы убрать ролик из выбранного раздела.</div>
+                <input type="file" id="upload-file" accept="image/*,video/*">
             </div>
 
             <div class="field-block">
@@ -420,6 +506,24 @@
 </div>
 <script>
 var content = { modals: {}, teas: {}, footer: {}, texts: {} };
+var uploadTarget = 'image';
+var sectionLabels = {
+    'modal|chairman-club': 'Клуб имени «Председателя С.»',
+    'modal|everyday-tea': 'Чай на каждый день',
+    'modal|tea-ceremony': 'Чайная церемония — проведение и обучение',
+    'modal|tea-party': 'Чайная пьянка — чайно-музыкальные вечера',
+    'modal|sale': 'Распродажа / Подарочные сертификаты',
+    'modal|custom-order': 'Чай на заказ — опт и эксклюзив',
+    'tea|puer': 'Пуэр',
+    'tea|oolong': 'Улун',
+    'tea|green': 'Зелёный чай',
+    'tea|white': 'Белый чай',
+    'tea|yellow': 'Жёлтый чай',
+    'tea|red': 'Красный чай',
+    'tea|black': 'Чёрный чай',
+    'text|main': 'Главная страница',
+    'footer|footer': 'Адрес и контакт'
+};
 
 function show(id) { document.getElementById(id).style.display = 'block'; }
 function hide(id) { document.getElementById(id).style.display = 'none'; }
@@ -447,6 +551,36 @@ function getSel() {
     return { type: parts[0], key: parts[1] };
 }
 
+function sectionLabel(type, key) {
+    return sectionLabels[type + '|' + key] || key;
+}
+
+function buildTrashList() {
+    var list = document.getElementById('trash-list');
+    var items = [];
+    Object.keys(content.modals || {}).forEach(function(key) {
+        if (content.modals[key] && content.modals[key].deleted) items.push({ type: 'modal', key: key, group: 'Модальное окно' });
+    });
+    Object.keys(content.teas || {}).forEach(function(key) {
+        if (content.teas[key] && content.teas[key].deleted) items.push({ type: 'tea', key: key, group: 'Чайный каталог' });
+    });
+    if (content.texts && content.texts.deleted) items.push({ type: 'text', key: 'main', group: 'Основные тексты' });
+    if (content.footer && content.footer.deleted) items.push({ type: 'footer', key: 'footer', group: 'Контакты' });
+
+    if (!items.length) {
+        list.innerHTML = '<div class="trash-empty">Корзина пуста.</div>';
+        return;
+    }
+
+    list.innerHTML = items.map(function(item) {
+        var value = item.type + '|' + item.key;
+        return '<div class="trash-item">' +
+            '<div class="trash-item-name"><strong>' + item.group + '</strong><br>' + sectionLabel(item.type, item.key) + '</div>' +
+            '<button class="btn-outline btn-sm restore-btn" type="button" data-restore="' + value + '">Восстановить</button>' +
+            '</div>';
+    }).join('');
+}
+
 function loadForm() {
     var s = getSel();
     hide('f-modal'); hide('f-tea'); hide('f-footer'); hide('f-text');
@@ -454,12 +588,14 @@ function loadForm() {
     var deletedNote = document.getElementById('deleted-note');
     var current = selectedData(s);
     deletedNote.style.display = current.deleted ? 'block' : 'none';
+    buildTrashList();
 
     if (s.type === 'modal') {
         show('f-modal');
         var d = (content.modals && content.modals[s.key]) || {};
         setVal('m-html', d.html);
         setVal('m-image', d.image);
+        setVal('m-video', d.video);
         updatePreview();
 
     } else if (s.type === 'tea') {
@@ -487,9 +623,55 @@ function loadForm() {
 
 function updatePreview() {
     var url = val('m-image').trim();
+    var videoUrl = val('m-video').trim();
     var img = document.getElementById('image-preview');
+    var video = document.getElementById('video-preview');
     if (url) { img.src = url; img.style.display = 'block'; }
     else { img.style.display = 'none'; }
+    if (videoUrl) { video.src = videoUrl; video.style.display = 'block'; }
+    else { video.removeAttribute('src'); video.style.display = 'none'; }
+}
+
+function clearSelectedForm() {
+    var s = getSel();
+    if (s.type === 'modal') {
+        setVal('m-html', '');
+        setVal('m-image', '');
+        setVal('m-video', '');
+        updatePreview();
+    } else if (s.type === 'tea') {
+        setVal('t-desc', '');
+        setVal('t-note', '');
+        setVal('t-vars', '');
+    } else if (s.type === 'footer') {
+        setVal('fo-loc', '');
+        setVal('fo-con', '');
+    } else if (s.type === 'text') {
+        setVal('tx-top', '');
+        setVal('tx-title', '');
+        setVal('tx-subtitle', '');
+        setVal('tx-projects', '');
+        setVal('tx-footer-note', '');
+    }
+}
+
+function setActionHelp(message) {
+    document.getElementById('action-help').textContent = message;
+}
+
+function doAddMode() {
+    clearSelectedForm();
+    document.getElementById('deleted-note').style.display = 'block';
+    document.getElementById('deleted-note').textContent = 'Режим добавления: заполните поля и нажмите «Сохранить», чтобы добавить или вернуть выбранный раздел на сайт.';
+    setActionHelp('Режим добавления: заполните пустые поля выбранного раздела и нажмите «Сохранить».');
+    status('Заполните поля и нажмите «Сохранить»', '');
+}
+
+function doEditMode() {
+    loadForm();
+    document.getElementById('deleted-note').textContent = 'Этот раздел сейчас скрыт на сайте. Заполните поля и нажмите «Сохранить», чтобы вернуть его.';
+    setActionHelp('Режим редактирования: выберите раздел, измените поля и нажмите «Сохранить».');
+    status('Можно редактировать выбранный раздел', '');
 }
 
 function doSave() {
@@ -499,6 +681,7 @@ function doSave() {
         content.modals[s.key] = {
             html: val('m-html'),
             image: val('m-image').trim() || null,
+            video: val('m-video').trim() || null,
             deleted: false
         };
     } else if (s.type === 'tea') {
@@ -526,10 +709,39 @@ function doSave() {
         };
     }
 
-    saveContent('✓ Сохранено — сайт обновлён');
+    saveContent('✓ Сохранено — сайт обновлён', buildTrashList);
 }
 
-function saveContent(successMessage) {
+function syncCurrentModalFields() {
+    var s = getSel();
+    if (s.type !== 'modal') return false;
+    if (!content.modals) content.modals = {};
+    content.modals[s.key] = {
+        html: val('m-html'),
+        image: val('m-image').trim() || null,
+        video: val('m-video').trim() || null,
+        deleted: false
+    };
+    return true;
+}
+
+function removeSelectedMedia(kind) {
+    var s = getSel();
+    if (s.type !== 'modal') {
+        status('Изображения и видео есть только в модальных разделах', 'status-err');
+        return;
+    }
+    if (kind === 'image') {
+        setVal('m-image', '');
+    } else {
+        setVal('m-video', '');
+    }
+    updatePreview();
+    syncCurrentModalFields();
+    saveContent(kind === 'image' ? '✓ Изображение удалено из раздела' : '✓ Видео удалено из раздела');
+}
+
+function saveContent(successMessage, afterSave) {
     status('Сохраняю...', '');
     fetch('/api/content', {
         method: 'POST',
@@ -537,10 +749,74 @@ function saveContent(successMessage) {
         body: JSON.stringify(content)
     })
     .then(function(r) {
-        if (r.ok) { status(successMessage, 'status-ok'); }
+        if (r.ok) {
+            status(successMessage, 'status-ok');
+            if (afterSave) afterSave();
+        }
         else { r.text().then(function(t){ status('Ошибка: ' + t, 'status-err'); }); }
     })
     .catch(function(e) { status('Ошибка соединения', 'status-err'); });
+}
+
+function deleteSelectedSection() {
+    var s = getSel();
+    if (s.type === 'modal') {
+        if (!content.modals) content.modals = {};
+        content.modals[s.key] = {
+            html: val('m-html'),
+            image: val('m-image').trim() || null,
+            video: val('m-video').trim() || null,
+            deleted: true
+        };
+        updatePreview();
+    } else if (s.type === 'tea') {
+        if (!content.teas) content.teas = {};
+        content.teas[s.key] = {
+            description: val('t-desc').trim(),
+            note: val('t-note').trim(),
+            varieties: val('t-vars').split('\n').map(function(s){ return s.trim(); }).filter(Boolean),
+            deleted: true
+        };
+    } else if (s.type === 'footer') {
+        content.footer = {
+            location: val('fo-loc').trim(),
+            contact: val('fo-con').trim(),
+            deleted: true
+        };
+    } else if (s.type === 'text') {
+        content.texts = {
+            topLine: val('tx-top').trim(),
+            title: val('tx-title').trim(),
+            subtitle: val('tx-subtitle').trim(),
+            projectsTitle: val('tx-projects').trim(),
+            footerNote: val('tx-footer-note').trim(),
+            deleted: true
+        };
+    }
+
+    document.getElementById('deleted-note').style.display = 'block';
+    saveContent('✓ Удалено — раздел скрыт на сайте', buildTrashList);
+}
+
+function restoreSection(type, key) {
+    if (type === 'modal' && content.modals && content.modals[key]) {
+        content.modals[key].deleted = false;
+    } else if (type === 'tea' && content.teas && content.teas[key]) {
+        content.teas[key].deleted = false;
+    } else if (type === 'text' && content.texts) {
+        content.texts.deleted = false;
+    } else if (type === 'footer' && content.footer) {
+        content.footer.deleted = false;
+    } else {
+        status('Не удалось найти материал для восстановления', 'status-err');
+        return;
+    }
+
+    document.getElementById('section-sel').value = type + '|' + key;
+    saveContent('✓ Материал восстановлен', function() {
+        buildTrashList();
+        loadForm();
+    });
 }
 
 function doDelete() {
@@ -553,45 +829,39 @@ function doDelete() {
     };
     if (!confirm('Удалить/скрыть ' + (labels[s.type] || 'этот раздел') + ' с сайта?')) return;
 
-    if (s.type === 'modal') {
-        if (!content.modals) content.modals = {};
-        content.modals[s.key] = { html: '', image: null, deleted: true };
-        setVal('m-html', '');
-        setVal('m-image', '');
-        updatePreview();
-    } else if (s.type === 'tea') {
-        if (!content.teas) content.teas = {};
-        content.teas[s.key] = { description: '', note: '', varieties: [], deleted: true };
-        setVal('t-desc', '');
-        setVal('t-note', '');
-        setVal('t-vars', '');
-    } else if (s.type === 'footer') {
-        content.footer = { location: '', contact: '', deleted: true };
-        setVal('fo-loc', '');
-        setVal('fo-con', '');
-    } else if (s.type === 'text') {
-        content.texts = { topLine: '', title: '', subtitle: '', projectsTitle: '', footerNote: '', deleted: true };
-        setVal('tx-top', '');
-        setVal('tx-title', '');
-        setVal('tx-subtitle', '');
-        setVal('tx-projects', '');
-        setVal('tx-footer-note', '');
+    var password = prompt('Введите пароль администратора, чтобы подтвердить удаление:');
+    if (password === null) return;
+    if (!password.trim()) {
+        status('Удаление отменено: пароль не введён', 'status-err');
+        return;
     }
 
-    document.getElementById('deleted-note').style.display = 'block';
-    saveContent('✓ Удалено — раздел скрыт на сайте');
+    status('Проверяю пароль...', '');
+    fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: password })
+    })
+    .then(function(r) {
+        if (!r.ok) throw new Error('wrong-password');
+        deleteSelectedSection();
+    })
+    .catch(function() {
+        status('Удаление отменено: неверный пароль', 'status-err');
+    });
 }
 
 function doUpload(file) {
     if (!file) return;
     var fd = new FormData();
     fd.append('file', file);
-    status('Загружаю изображение...', '');
+    status(uploadTarget === 'video' ? 'Загружаю видео...' : 'Загружаю изображение...', '');
     fetch('/api/upload', { method: 'POST', body: fd })
     .then(function(r) { return r.json(); })
     .then(function(d) {
         if (d.ok) {
-            setVal('m-image', d.url);
+            if (uploadTarget === 'video') setVal('m-video', d.url);
+            else setVal('m-image', d.url);
             updatePreview();
             status('✓ Загружено: ' + d.url, 'status-ok');
         } else {
@@ -612,6 +882,7 @@ function showAdmin() {
         if (!content.teas) content.teas = {};
         if (!content.footer) content.footer = {};
         if (!content.texts) content.texts = {};
+        buildTrashList();
         loadForm();
     })
     .catch(function() {
@@ -649,16 +920,39 @@ document.getElementById('logout-btn').onclick = function() {
 };
 
 document.getElementById('section-sel').onchange = loadForm;
+document.getElementById('add-mode-btn').onclick = doAddMode;
+document.getElementById('edit-mode-btn').onclick = doEditMode;
+document.getElementById('delete-mode-btn').onclick = doDelete;
 document.getElementById('save-btn').onclick = doSave;
 document.getElementById('delete-btn').onclick = doDelete;
-document.getElementById('upload-btn').onclick = function() {
+document.getElementById('trash-list').onclick = function(e) {
+    var btn = e.target.closest('.restore-btn');
+    if (!btn) return;
+    var parts = btn.getAttribute('data-restore').split('|');
+    restoreSection(parts[0], parts[1]);
+};
+document.getElementById('upload-img-btn').onclick = function() {
+    uploadTarget = 'image';
+    document.getElementById('upload-file').accept = 'image/*';
     document.getElementById('upload-file').click();
+};
+document.getElementById('upload-video-btn').onclick = function() {
+    uploadTarget = 'video';
+    document.getElementById('upload-file').accept = 'video/mp4,video/webm,video/ogg,video/quicktime';
+    document.getElementById('upload-file').click();
+};
+document.getElementById('remove-img-btn').onclick = function() {
+    removeSelectedMedia('image');
+};
+document.getElementById('remove-video-btn').onclick = function() {
+    removeSelectedMedia('video');
 };
 document.getElementById('upload-file').onchange = function() {
     doUpload(this.files[0]);
     this.value = '';
 };
 document.getElementById('m-image').oninput = updatePreview;
+document.getElementById('m-video').oninput = updatePreview;
 
 // Check if already logged in
 fetch('/api/me')

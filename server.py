@@ -23,13 +23,13 @@ app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 app.config['SESSION_COOKIE_SECURE'] = False  # set True behind HTTPS in production
 
-# Limit file uploads to 5 MB
-app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
+# Limit file uploads to 100 MB
+app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024
 
 ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'chainan2002')
 TEAS_FILE = os.path.join(os.path.dirname(__file__), 'teas.json')
 CONTENT_FILE = os.path.join(os.path.dirname(__file__), 'content.json')
-ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif', 'webp'}
+ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif', 'webp', 'mp4', 'webm', 'mov', 'ogv'}
 
 # File types that must never be served via the static route
 BLOCKED_EXTENSIONS = {'.py', '.json', '.toml', '.lock', '.md', '.txt', '.ini', '.cfg', '.env'}
@@ -161,14 +161,15 @@ def upload_image():
     filename = secure_filename(file.filename)
     ext = filename.rsplit('.', 1)[-1].lower() if '.' in filename else ''
     if ext not in ALLOWED_EXTENSIONS:
-        return jsonify({'error': 'Недопустимый формат. Разрешены: jpg, png, gif, webp'}), 400
-    new_name = f"img_{int(time.time())}.{ext}"
+        return jsonify({'error': 'Недопустимый формат. Разрешены: jpg, jpeg, png, gif, webp, mp4, webm, mov, ogv'}), 400
+    media_prefix = 'video' if ext in {'mp4', 'webm', 'mov', 'ogv'} else 'img'
+    new_name = f"{media_prefix}_{time.time_ns()}.{ext}"
     file.save(os.path.join(os.path.dirname(__file__), new_name))
     return jsonify({'ok': True, 'url': f'/{new_name}'})
 
 @app.errorhandler(413)
 def too_large(e):
-    return jsonify({'error': 'Файл слишком большой. Максимум 5 МБ.'}), 413
+    return jsonify({'error': 'Файл слишком большой. Максимум 100 МБ.'}), 413
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=False)

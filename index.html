@@ -1064,6 +1064,14 @@
                     img.style.cssText = 'width:100%;max-width:256px;display:block;margin:0 auto 1.2rem;border-radius:2px;opacity:0.93;';
                     teaPartyModalBody.insertBefore(img, teaPartyModalBody.firstChild);
                 }
+                if (modalData.video) {
+                    const video = document.createElement('video');
+                    video.src = modalData.video;
+                    video.controls = true;
+                    video.playsInline = true;
+                    video.style.cssText = 'width:100%;display:block;margin:0 auto 1.2rem;border-radius:2px;opacity:0.96;';
+                    teaPartyModalBody.insertBefore(video, teaPartyModalBody.firstChild);
+                }
             } else {
                 const template = document.querySelector(`#modal-template-${key}`);
                 if (template) {

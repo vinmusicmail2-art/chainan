@@ -33,12 +33,17 @@ Flask-based catalog website for Russian tea shop "Чайнань". Static HTML/C
 ## Admin Panel (`/admin`)
 
 - Login with password (env var `ADMIN_PASSWORD`, default `chainan2002`)
+- Top action controls explicitly expose **Добавить**, **Удалить**, and **Редактировать** modes. Add mode clears the selected form so the admin can fill and save/restores hidden sections; edit mode reloads existing values; delete mode hides the selected section.
+- Modal sections support uploading/setting both image and video media. Upload limit is 100 MB; supported uploads include jpg/jpeg/png/gif/webp and mp4/webm/mov/ogv.
+- Edit mode includes separate controls to remove the selected modal section's image or video without deleting/hiding the section.
 - Section dropdown: 6 modal sections + 7 tea catalog entries + footer
 - **Modal sections**: image URL/upload + HTML textarea (empty = hardcoded template shown)
 - **Tea sections**: description + note (multi-line) + varieties (one per line → shown as comma list)
 - **Main text section**: top line, main title, subtitle, projects heading, footer note
 - **Footer**: location + contact fields
 - Admin can hide/delete modal sections, tea catalog entries, and footer contact block; deleted entries are stored with `deleted: true`.
+- Deleting/hiding a section requires re-entering the admin password to prevent accidental deletion.
+- Admin panel has a **Корзина** section listing deleted materials with one-click restore. Deleting now preserves the section content and marks it `deleted: true` so restore can bring it back.
 - Save applies changes immediately to live site
 
 ## Modal System
