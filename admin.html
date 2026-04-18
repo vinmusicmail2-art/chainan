@@ -38,6 +38,16 @@
             letter-spacing: 0.1em;
         }
 
+        .admin-mode-title {
+            margin-top: 0.45rem;
+            font-family: 'Yanone Kaffeesatz', sans-serif;
+            font-size: 1.28rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--red);
+        }
+
         hr { border: none; border-top: 1px solid var(--ink); margin: 1.5rem 0; }
 
         input[type="password"],
@@ -94,6 +104,11 @@
             border: 1px solid var(--ink);
             font-size: 0.6rem;
             padding: 0.5rem 1.2rem;
+        }
+
+        .btn-danger {
+            background: var(--red);
+            color: var(--paper);
         }
 
         .btn-sm {
@@ -161,6 +176,36 @@
             opacity: 0.6;
         }
 
+        .action-headings {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+            margin: 0 0 1.7rem;
+        }
+
+        .action-heading {
+            border: 1.5px solid var(--ink);
+            padding: 0.9rem 0.8rem;
+            text-align: center;
+            background: rgba(45,36,30,0.06);
+        }
+
+        .action-heading h2 {
+            font-family: 'Yanone Kaffeesatz', sans-serif;
+            font-size: 1.45rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 0.35rem;
+            color: var(--ink);
+        }
+
+        .action-heading p {
+            font-size: 0.56rem;
+            line-height: 1.45;
+            opacity: 0.55;
+            letter-spacing: 0.05em;
+        }
+
         .save-bar {
             position: sticky;
             bottom: 0;
@@ -176,6 +221,16 @@
         .status-msg { font-size: 0.6rem; letter-spacing: 0.1em; }
         .status-ok  { color: var(--ok); }
         .status-err { color: var(--red); }
+        .deleted-note {
+            display: none;
+            color: var(--red);
+            font-size: 0.65rem;
+            letter-spacing: 0.08em;
+            line-height: 1.5;
+            margin: 0 0 1.2rem;
+            border: 1px solid rgba(139,58,42,0.35);
+            padding: 0.7rem;
+        }
 
         #upload-file { display: none; }
 
@@ -183,6 +238,10 @@
         #login-wrap { text-align: center; }
         #login-wrap h1 { margin-bottom: 1.5rem; }
         .input-group { margin-bottom: 1rem; text-align: left; }
+
+        @media (max-width: 640px) {
+            .action-headings { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -207,10 +266,26 @@
             <div>
                 <div class="mono-label">Чайнань / Панель управления</div>
                 <h1>Редактор сайта</h1>
+                <div class="admin-mode-title">Добавить / Удалить / Редактировать</div>
             </div>
             <button class="btn-outline" id="logout-btn">Выйти</button>
         </div>
         <hr>
+
+        <div class="action-headings">
+            <div class="action-heading">
+                <h2>Добавить</h2>
+                <p>Заполните пустой или скрытый раздел и нажмите «Сохранить».</p>
+            </div>
+            <div class="action-heading">
+                <h2>Удалить</h2>
+                <p>Выберите раздел и нажмите кнопку «Удалить».</p>
+            </div>
+            <div class="action-heading">
+                <h2>Редактировать</h2>
+                <p>Выберите нужный раздел, измените текст и сохраните.</p>
+            </div>
+        </div>
 
         <div class="field-block">
             <div class="field-label">Раздел</div>
@@ -232,6 +307,9 @@
                     <option value="tea|red">Красный чай</option>
                     <option value="tea|black">Чёрный чай</option>
                 </optgroup>
+                <optgroup label="Основные тексты">
+                    <option value="text|main">Главная страница</option>
+                </optgroup>
                 <optgroup label="Контакты">
                     <option value="footer|footer">Адрес и контакт</option>
                 </optgroup>
@@ -239,6 +317,8 @@
         </div>
 
         <hr>
+
+        <div class="deleted-note" id="deleted-note">Этот раздел сейчас скрыт на сайте. Заполните поля и нажмите «Сохранить», чтобы вернуть его.</div>
 
         <!-- MODAL FORM -->
         <div id="f-modal">
@@ -300,15 +380,46 @@
             </div>
         </div>
 
+        <!-- TEXT FORM -->
+        <div id="f-text" style="display:none">
+            <div class="section-type-badge">Основные тексты сайта</div>
+
+            <div class="field-block">
+                <div class="field-label">Верхняя подпись</div>
+                <input type="text" id="tx-top" placeholder="Est. 2002 / Catalog / Rostov-on-Don / Moscow">
+            </div>
+
+            <div class="field-block">
+                <div class="field-label">Главный заголовок</div>
+                <input type="text" id="tx-title" placeholder="Чайная Лавка «Чайнань»">
+            </div>
+
+            <div class="field-block">
+                <div class="field-label">Подзаголовок</div>
+                <input type="text" id="tx-subtitle" placeholder="для тех кто понимает чай">
+            </div>
+
+            <div class="field-block">
+                <div class="field-label">Заголовок блока проектов</div>
+                <input type="text" id="tx-projects" placeholder="Наши Проекты:">
+            </div>
+
+            <div class="field-block">
+                <div class="field-label">Текст под контактом</div>
+                <input type="text" id="tx-footer-note" placeholder="Ежедневно до последнего гостя">
+            </div>
+        </div>
+
         <div class="save-bar">
             <button id="save-btn">Сохранить</button>
+            <button class="btn-danger" id="delete-btn">Удалить</button>
             <span class="status-msg" id="status"></span>
         </div>
     </div>
 
 </div>
 <script>
-var content = { modals: {}, teas: {}, footer: {} };
+var content = { modals: {}, teas: {}, footer: {}, texts: {} };
 
 function show(id) { document.getElementById(id).style.display = 'block'; }
 function hide(id) { document.getElementById(id).style.display = 'none'; }
@@ -322,6 +433,14 @@ function status(msg, cls) {
     if (cls === 'status-ok') setTimeout(function() { el.textContent = ''; }, 4000);
 }
 
+function selectedData(s) {
+    if (s.type === 'modal') return (content.modals && content.modals[s.key]) || {};
+    if (s.type === 'tea') return (content.teas && content.teas[s.key]) || {};
+    if (s.type === 'text') return content.texts || {};
+    if (s.type === 'footer') return content.footer || {};
+    return {};
+}
+
 function getSel() {
     var raw = val('section-sel');
     var parts = raw.split('|');
@@ -330,8 +449,11 @@ function getSel() {
 
 function loadForm() {
     var s = getSel();
-    hide('f-modal'); hide('f-tea'); hide('f-footer');
+    hide('f-modal'); hide('f-tea'); hide('f-footer'); hide('f-text');
     document.getElementById('status').textContent = '';
+    var deletedNote = document.getElementById('deleted-note');
+    var current = selectedData(s);
+    deletedNote.style.display = current.deleted ? 'block' : 'none';
 
     if (s.type === 'modal') {
         show('f-modal');
@@ -351,6 +473,15 @@ function loadForm() {
         show('f-footer');
         setVal('fo-loc', content.footer && content.footer.location);
         setVal('fo-con', content.footer && content.footer.contact);
+
+    } else if (s.type === 'text') {
+        show('f-text');
+        var t = content.texts || {};
+        setVal('tx-top', t.topLine);
+        setVal('tx-title', t.title);
+        setVal('tx-subtitle', t.subtitle);
+        setVal('tx-projects', t.projectsTitle);
+        setVal('tx-footer-note', t.footerNote);
     }
 }
 
@@ -367,22 +498,38 @@ function doSave() {
         if (!content.modals) content.modals = {};
         content.modals[s.key] = {
             html: val('m-html'),
-            image: val('m-image').trim() || null
+            image: val('m-image').trim() || null,
+            deleted: false
         };
     } else if (s.type === 'tea') {
         if (!content.teas) content.teas = {};
         content.teas[s.key] = {
             description: val('t-desc').trim(),
             note: val('t-note').trim(),
-            varieties: val('t-vars').split('\n').map(function(s){ return s.trim(); }).filter(Boolean)
+            varieties: val('t-vars').split('\n').map(function(s){ return s.trim(); }).filter(Boolean),
+            deleted: false
         };
     } else if (s.type === 'footer') {
         content.footer = {
             location: val('fo-loc').trim(),
-            contact: val('fo-con').trim()
+            contact: val('fo-con').trim(),
+            deleted: false
+        };
+    } else if (s.type === 'text') {
+        content.texts = {
+            topLine: val('tx-top').trim(),
+            title: val('tx-title').trim(),
+            subtitle: val('tx-subtitle').trim(),
+            projectsTitle: val('tx-projects').trim(),
+            footerNote: val('tx-footer-note').trim(),
+            deleted: false
         };
     }
 
+    saveContent('✓ Сохранено — сайт обновлён');
+}
+
+function saveContent(successMessage) {
     status('Сохраняю...', '');
     fetch('/api/content', {
         method: 'POST',
@@ -390,10 +537,49 @@ function doSave() {
         body: JSON.stringify(content)
     })
     .then(function(r) {
-        if (r.ok) { status('✓ Сохранено — сайт обновлён', 'status-ok'); }
+        if (r.ok) { status(successMessage, 'status-ok'); }
         else { r.text().then(function(t){ status('Ошибка: ' + t, 'status-err'); }); }
     })
     .catch(function(e) { status('Ошибка соединения', 'status-err'); });
+}
+
+function doDelete() {
+    var s = getSel();
+    var labels = {
+        modal: 'этот раздел навигации',
+        tea: 'этот чайный раздел',
+        text: 'основные тексты',
+        footer: 'контакты'
+    };
+    if (!confirm('Удалить/скрыть ' + (labels[s.type] || 'этот раздел') + ' с сайта?')) return;
+
+    if (s.type === 'modal') {
+        if (!content.modals) content.modals = {};
+        content.modals[s.key] = { html: '', image: null, deleted: true };
+        setVal('m-html', '');
+        setVal('m-image', '');
+        updatePreview();
+    } else if (s.type === 'tea') {
+        if (!content.teas) content.teas = {};
+        content.teas[s.key] = { description: '', note: '', varieties: [], deleted: true };
+        setVal('t-desc', '');
+        setVal('t-note', '');
+        setVal('t-vars', '');
+    } else if (s.type === 'footer') {
+        content.footer = { location: '', contact: '', deleted: true };
+        setVal('fo-loc', '');
+        setVal('fo-con', '');
+    } else if (s.type === 'text') {
+        content.texts = { topLine: '', title: '', subtitle: '', projectsTitle: '', footerNote: '', deleted: true };
+        setVal('tx-top', '');
+        setVal('tx-title', '');
+        setVal('tx-subtitle', '');
+        setVal('tx-projects', '');
+        setVal('tx-footer-note', '');
+    }
+
+    document.getElementById('deleted-note').style.display = 'block';
+    saveContent('✓ Удалено — раздел скрыт на сайте');
 }
 
 function doUpload(file) {
@@ -425,6 +611,7 @@ function showAdmin() {
         if (!content.modals) content.modals = {};
         if (!content.teas) content.teas = {};
         if (!content.footer) content.footer = {};
+        if (!content.texts) content.texts = {};
         loadForm();
     })
     .catch(function() {
@@ -463,6 +650,7 @@ document.getElementById('logout-btn').onclick = function() {
 
 document.getElementById('section-sel').onchange = loadForm;
 document.getElementById('save-btn').onclick = doSave;
+document.getElementById('delete-btn').onclick = doDelete;
 document.getElementById('upload-btn').onclick = function() {
     document.getElementById('upload-file').click();
 };

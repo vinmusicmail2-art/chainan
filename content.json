@@ -47,5 +47,12 @@
   "footer": {
     "location": "Пушкинская улица, 118А",
     "contact": "@chainan_tea"
+  },
+  "texts": {
+    "topLine": "Est. 2002 / Catalog / Rostov-on-Don / Moscow",
+    "title": "Чайная Лавка «Чайнань»",
+    "subtitle": "для тех кто понимает чай",
+    "projectsTitle": "Наши Проекты:",
+    "footerNote": "Ежедневно до последнего гостя"
   }
 }

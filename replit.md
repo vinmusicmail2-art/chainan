@@ -36,7 +36,9 @@ Flask-based catalog website for Russian tea shop "Чайнань". Static HTML/C
 - Section dropdown: 6 modal sections + 7 tea catalog entries + footer
 - **Modal sections**: image URL/upload + HTML textarea (empty = hardcoded template shown)
 - **Tea sections**: description + note (multi-line) + varieties (one per line → shown as comma list)
+- **Main text section**: top line, main title, subtitle, projects heading, footer note
 - **Footer**: location + contact fields
+- Admin can hide/delete modal sections, tea catalog entries, and footer contact block; deleted entries are stored with `deleted: true`.
 - Save applies changes immediately to live site
 
 ## Modal System
@@ -48,6 +50,7 @@ Flask-based catalog website for Russian tea shop "Чайнань". Static HTML/C
 
 ## Deployment
 
-- Gunicorn: `gunicorn --bind=0.0.0.0:5000 --reuse-port server:app`
+- Replit workflow: `uv run gunicorn --bind=0.0.0.0:5000 --reuse-port server:app`
+- Production run command uses the same `uv run gunicorn ... server:app` command on port 5000.
 - Flask sessions (signed cookies, `SECRET_KEY` env var)
 - Content files (`content.json`, `teas.json`) must be writable in deployment

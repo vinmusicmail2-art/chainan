@@ -531,7 +531,7 @@
         <div class="stamp">茶南</div>
 
         <header style="margin-bottom: calc(8rem - 2cm)">
-            <div class="mono mb-10 text-center">Est. 2002 / Catalog / Rostov-on-Don / Moscow</div>
+            <div class="mono mb-10 text-center" id="site-top-line">Est. 2002 / Catalog / Rostov-on-Don / Moscow</div>
             
             <div class="header-box">
                 <div class="corner corner-tl"></div>
@@ -540,14 +540,14 @@
                 <div class="corner corner-br"></div>
                 <div class="header-monogram">茶</div>
                 <img src="/logo.png" alt="Логотип Чайнань" class="header-logo">
-                <h1 class="letterpress">Чайная Лавка «Чайнань»</h1>
-                <p class="subtitle-mono text-center leading-relaxed">
+                <h1 class="letterpress" id="site-title">Чайная Лавка «Чайнань»</h1>
+                <p class="subtitle-mono text-center leading-relaxed" id="site-subtitle">
                     для тех кто понимает чай
                 </p>
             </div>
         </header>
 
-        <h2 class="category-title" style="margin-bottom: 0.8rem;">Наши Проекты:</h2>
+        <h2 class="category-title" style="margin-bottom: 0.8rem;" id="projects-title">Наши Проекты:</h2>
 
         <nav class="nav-panel">
             <div class="nav-panel-item nav-panel-top modal-trigger" tabindex="0" role="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="chairman-club" data-modal-title="Клуб имени «Председателя С.»">Клуб имени «Председателя С.» — беседы о чае, о философии и выздоровлении духа и тела</div>
@@ -1012,7 +1012,7 @@
             <div class="md:text-right">
                 <div class="mono mb-6">Контакт</div>
                 <div class="text-lg font-bold uppercase tracking-tighter" id="footer-contact">@chainan_tea</div>
-                <div class="serif-italic opacity-60">Ежедневно до последнего гостя</div>
+                <div class="serif-italic opacity-60" id="footer-note">Ежедневно до последнего гостя</div>
             </div>
         </footer>
 
@@ -1046,12 +1046,15 @@
             activeModalTrigger = trigger;
             const key = trigger.dataset.modalKey;
             const title = trigger.dataset.modalTitle || trigger.textContent.trim();
+            const modalData = siteContent.modals && siteContent.modals[key];
+            const teaData = siteContent.teas && siteContent.teas[key];
+
+            if ((modalData && modalData.deleted) || (teaData && teaData.deleted)) return;
 
             teaPartyModalTitle.textContent = title;
             teaPartyModal.setAttribute('data-current-key', key);
             teaPartyModalBody.replaceChildren();
 
-            const modalData = siteContent.modals && siteContent.modals[key];
             if (modalData && modalData.html) {
                 teaPartyModalBody.innerHTML = modalData.html;
                 if (modalData.image) {
@@ -1066,7 +1069,6 @@
                 if (template) {
                     teaPartyModalBody.appendChild(template.content.cloneNode(true));
                 } else {
-                    const teaData = siteContent.teas && siteContent.teas[key];
                     if (teaData) {
                         if (teaData.description) {
                             const p = document.createElement('p');
@@ -1145,33 +1147,82 @@
 
         function applyContent() {
             const teas = siteContent.teas || {};
+            const modals = siteContent.modals || {};
             const footer = siteContent.footer || {};
+            const texts = siteContent.texts || {};
+
+            if (!texts.deleted) {
+                const textTargets = [
+                    ['site-top-line', 'topLine'],
+                    ['site-title', 'title'],
+                    ['site-subtitle', 'subtitle'],
+                    ['projects-title', 'projectsTitle'],
+                    ['footer-note', 'footerNote']
+                ];
+                textTargets.forEach(([id, key]) => {
+                    const el = document.getElementById(id);
+                    if (el && Object.prototype.hasOwnProperty.call(texts, key)) {
+                        el.textContent = texts[key] || '';
+                        el.style.display = texts[key] ? '' : 'none';
+                    }
+                });
+            }
+
+            document.querySelectorAll('.modal-trigger[data-modal-key]').forEach(trigger => {
+                const key = trigger.dataset.modalKey;
+                if (modals[key] && modals[key].deleted) {
+                    trigger.style.display = 'none';
+                }
+            });
 
             document.querySelectorAll('[data-tea-desc]').forEach(el => {
                 const key = el.dataset.teaDesc;
-                if (teas[key] && teas[key].description) {
-                    el.textContent = teas[key].description;
+                const entry = el.closest('.tea-entry');
+                if (teas[key] && teas[key].deleted) {
+                    if (entry) entry.style.display = 'none';
+                    return;
+                }
+                if (teas[key]) {
+                    el.textContent = teas[key].description || '';
+                    el.style.display = teas[key].description ? '' : 'none';
                 }
             });
 
             document.querySelectorAll('.production-note[data-tea]').forEach(note => {
                 const key = note.getAttribute('data-tea');
+                if (teas[key] && teas[key].deleted) {
+                    const entry = note.closest('.tea-entry');
+                    if (entry) entry.style.display = 'none';
+                    return;
+                }
                 if (teas[key]) {
                     const noteLines = (teas[key].note || '').replace(/\n/g, '<br>');
-                    const varieties = (teas[key].varieties || []).join(', ') || '—';
-                    note.innerHTML = `${noteLines}<br>Сорта в наличии: <span class="tea-varieties">${varieties}</span>.`;
+                    const varieties = (teas[key].varieties || []).join(', ');
+                    const parts = [];
+                    if (noteLines) parts.push(noteLines);
+                    if (varieties) parts.push(`Сорта в наличии: <span class="tea-varieties">${varieties}</span>.`);
+                    note.innerHTML = parts.join('<br>');
+                    note.style.display = parts.length ? '' : 'none';
                 }
             });
 
+            const footerEl = document.querySelector('footer');
+            if (footerEl && footer.deleted) {
+                footerEl.style.display = 'none';
+                return;
+            }
+
             const locEl = document.getElementById('footer-location');
-            if (locEl && footer.location) {
-                locEl.textContent = footer.location;
-                locEl.href = `https://maps.google.com/?q=${encodeURIComponent(footer.location)}`;
+            if (locEl && Object.prototype.hasOwnProperty.call(footer, 'location')) {
+                locEl.textContent = footer.location || '';
+                locEl.href = footer.location ? `https://maps.google.com/?q=${encodeURIComponent(footer.location)}` : '#';
+                locEl.parentElement.style.display = footer.location ? '' : 'none';
             }
 
             const contEl = document.getElementById('footer-contact');
-            if (contEl && footer.contact) {
-                contEl.textContent = footer.contact;
+            if (contEl && Object.prototype.hasOwnProperty.call(footer, 'contact')) {
+                contEl.textContent = footer.contact || '';
+                contEl.parentElement.style.display = footer.contact ? '' : 'none';
             }
         }
 
