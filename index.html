@@ -288,13 +288,34 @@
         }
 
         @media (max-width: 640px) {
+            #main-stamp {
+                display: none;
+            }
+
+            .stamp-in-box {
+                display: flex;
+                position: absolute;
+                right: 14px;
+                bottom: 14px;
+                top: auto;
+                left: auto;
+                width: 58px;
+                height: 58px;
+                font-size: 1rem;
+                transform: rotate(-12deg);
+            }
+
             .header-logo {
                 position: static;
                 transform: none;
                 display: block;
                 margin: 0 auto 12px;
-                width: 56px;
-                height: 56px;
+                width: 60px;
+                height: 60px;
+            }
+
+            .header-monogram {
+                display: none;
             }
 
             .nav-panel {
@@ -339,6 +360,10 @@
             top: 50px;
             mix-blend-mode: darken;
             user-select: none;
+        }
+
+        .stamp-in-box {
+            display: none;
         }
 
         .header-box {
@@ -537,7 +562,7 @@
     <div class="texture-overlay"></div>
 
     <article class="scroll-canvas">
-        <div class="stamp">茶南</div>
+        <div class="stamp" id="main-stamp">茶南</div>
 
         <header style="margin-bottom: calc(8rem - 2cm)">
             <div class="mono mb-10 text-center" id="site-top-line">Est. 2002 / Catalog / Rostov-on-Don / Moscow</div>
@@ -547,6 +572,7 @@
                 <div class="corner corner-tr"></div>
                 <div class="corner corner-bl"></div>
                 <div class="corner corner-br"></div>
+                <div class="stamp stamp-in-box" id="mobile-stamp">茶南</div>
                 <div class="header-monogram">茶</div>
                 <img src="/logo.png" alt="Логотип Чайнань" class="header-logo">
                 <h1 class="letterpress" id="site-title" style="position:relative;z-index:1;">Чайная Лавка «Чайнань»</h1>
