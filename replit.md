@@ -2,6 +2,12 @@
 
 Flask-based catalog website for Russian tea shop "Чайнань". Static HTML/CSS/assets served from project root with JSON API for content management.
 
+## ⛔ ЗАПРЕТ НА РЕДАКТИРОВАНИЕ МОБИЛЬНОЙ ВЕРСИИ
+
+**Мобильные стили (`@media (max-width: 640px)`) в `index.html` зафиксированы.**
+Любые изменения в этом блоке — ТОЛЬКО по явной команде владельца проекта.
+Не трогать без разрешения!
+
 ## Stack
 
 - Python 3.11
