@@ -288,6 +288,15 @@
         }
 
         @media (max-width: 640px) {
+            .header-logo {
+                position: static;
+                transform: none;
+                display: block;
+                margin: 0 auto 12px;
+                width: 56px;
+                height: 56px;
+            }
+
             .nav-panel {
                 flex-direction: column;
                 gap: 0;
@@ -488,10 +497,12 @@
         }
 
         .header-logo {
-            display: block;
-            margin: 0 auto 14px;
-            width: clamp(44px, 8vw, 72px);
-            height: clamp(44px, 8vw, 72px);
+            position: absolute;
+            left: calc(24px + 1.5cm);
+            top: 50%;
+            transform: translateY(-50%);
+            width: clamp(34px, 4.73vw, 61px);
+            height: clamp(34px, 4.73vw, 61px);
             object-fit: contain;
             opacity: 0.8;
             filter: brightness(1.35);
@@ -538,7 +549,7 @@
                 <div class="corner corner-br"></div>
                 <div class="header-monogram">茶</div>
                 <img src="/logo.png" alt="Логотип Чайнань" class="header-logo">
-                <h1 class="letterpress" id="site-title">Чайная Лавка «Чайнань»</h1>
+                <h1 class="letterpress" id="site-title" style="position:relative;z-index:1;">Чайная Лавка «Чайнань»</h1>
                 <p class="subtitle-mono text-center leading-relaxed" id="site-subtitle">
                     для тех кто понимает чай
                 </p>
