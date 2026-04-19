@@ -287,50 +287,8 @@
             font-size: 0.792rem;
         }
 
-        @media (max-width: 640px) {
-            #main-stamp {
-                display: none;
-            }
-
-            .stamp-in-box {
-                display: flex;
-                position: absolute;
-                right: 14px;
-                bottom: 14px;
-                top: auto;
-                left: auto;
-                width: 58px;
-                height: 58px;
-                font-size: 1rem;
-                transform: rotate(-12deg);
-            }
-
-            .header-logo {
-                position: static;
-                transform: none;
-                display: block;
-                margin: 0 auto 12px;
-                width: 60px;
-                height: 60px;
-            }
-
-            .header-monogram {
-                display: none;
-            }
-
-            .nav-panel {
-                flex-direction: column;
-                gap: 0;
-            }
-            .nav-panel-item {
-                border-right: none;
-                border-bottom: 1px solid var(--ink);
-                width: 100%;
-                padding: 0.5rem 1rem;
-            }
-            .nav-panel-item:last-child {
-                border-bottom: none;
-            }
+        .nav-panel-item:last-child {
+            border-bottom: none;
         }
 
         .production-note {
@@ -364,6 +322,10 @@
 
         .stamp-in-box {
             display: none;
+            right: 14px;
+            bottom: 14px;
+            top: auto;
+            left: auto;
         }
 
         .header-box {
@@ -549,6 +511,47 @@
             margin-bottom: 0;
             color: #F0E6CF;
             text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+        }
+
+        @media (max-width: 640px) {
+            #main-stamp {
+                display: none;
+            }
+
+            .stamp-in-box {
+                display: flex;
+                width: 58px;
+                height: 58px;
+                font-size: 1rem;
+                transform: rotate(-12deg);
+            }
+
+            .header-logo {
+                position: static !important;
+                transform: none !important;
+                display: block !important;
+                margin: 0 auto 14px !important;
+                width: 62px !important;
+                height: 62px !important;
+            }
+
+            .header-monogram {
+                display: none;
+            }
+
+            .nav-panel {
+                flex-direction: column;
+                gap: 0;
+            }
+            .nav-panel-item {
+                border-right: none;
+                border-bottom: 1px solid var(--ink);
+                width: 100%;
+                padding: 0.5rem 1rem;
+            }
+            .nav-panel-item:last-child {
+                border-bottom: none;
+            }
         }
     </style>
     <noscript>
