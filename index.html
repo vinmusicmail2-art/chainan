@@ -1150,7 +1150,10 @@
                         if (teaData.varieties && teaData.varieties.length) {
                             const varsDiv = document.createElement('div');
                             varsDiv.className = 'tea-party-modal-section';
-                            varsDiv.innerHTML = '<strong>Сорта в наличии:</strong> ' + teaData.varieties.join(', ');
+                            const strong = document.createElement('strong');
+                            strong.textContent = 'Сорта в наличии: ';
+                            varsDiv.appendChild(strong);
+                            varsDiv.appendChild(document.createTextNode(teaData.varieties.join(', ')));
                             teaPartyModalBody.appendChild(varsDiv);
                         }
                     }

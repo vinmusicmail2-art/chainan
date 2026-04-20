@@ -828,27 +828,7 @@ function doDelete() {
         footer: 'контакты'
     };
     if (!confirm('Удалить/скрыть ' + (labels[s.type] || 'этот раздел') + ' с сайта?')) return;
-
-    var password = prompt('Введите пароль администратора, чтобы подтвердить удаление:');
-    if (password === null) return;
-    if (!password.trim()) {
-        status('Удаление отменено: пароль не введён', 'status-err');
-        return;
-    }
-
-    status('Проверяю пароль...', '');
-    fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: password })
-    })
-    .then(function(r) {
-        if (!r.ok) throw new Error('wrong-password');
-        deleteSelectedSection();
-    })
-    .catch(function() {
-        status('Удаление отменено: неверный пароль', 'status-err');
-    });
+    deleteSelectedSection();
 }
 
 function doUpload(file) {

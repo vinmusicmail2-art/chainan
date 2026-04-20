@@ -52,7 +52,10 @@ def is_rate_limited(ip):
     now = time.time()
     attempts = _login_attempts.get(ip, [])
     attempts = [t for t in attempts if now - t < ATTEMPT_WINDOW]
-    _login_attempts[ip] = attempts
+    if attempts:
+        _login_attempts[ip] = attempts
+    else:
+        _login_attempts.pop(ip, None)
     return len(attempts) >= MAX_ATTEMPTS
 
 
@@ -95,9 +98,13 @@ def save_content(data):
 
 def serve_html(filename):
     filepath = os.path.join(os.path.dirname(__file__), filename)
-    with open(filepath, 'r', encoding='utf-8') as f:
-        content = f.read()
-    response = make_response(content)
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            html_content = f.read()
+    except (FileNotFoundError, PermissionError) as e:
+        logging.error('serve_html: cannot read %s — %s', filename, e)
+        return jsonify({'error': 'Page unavailable'}), 503
+    response = make_response(html_content)
     response.headers['Content-Type'] = 'text/html; charset=utf-8'
     response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
     response.headers['Pragma'] = 'no-cache'
@@ -219,9 +226,20 @@ def upload_image():
     return jsonify({'ok': True, 'url': f'/{new_name}'})
 
 
+@app.errorhandler(404)
+def not_found(e):
+    return jsonify({'error': 'Не найдено'}), 404
+
+
 @app.errorhandler(413)
 def too_large(e):
     return jsonify({'error': 'Файл слишком большой. Максимум 10 МБ.'}), 413
+
+
+@app.errorhandler(500)
+def internal_error(e):
+    logging.error('Internal server error: %s', e)
+    return jsonify({'error': 'Внутренняя ошибка сервера'}), 500
 
 
 if __name__ == '__main__':
