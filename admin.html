@@ -600,10 +600,10 @@ function loadForm() {
 
     } else if (s.type === 'tea') {
         show('f-tea');
-        var d = (content.teas && content.teas[s.key]) || {};
-        setVal('t-desc', d.description);
-        setVal('t-note', d.note);
-        setVal('t-vars', d.varieties ? d.varieties.join('\n') : '');
+        var td = (content.teas && content.teas[s.key]) || {};
+        setVal('t-desc', td.description);
+        setVal('t-note', td.note);
+        setVal('t-vars', td.varieties ? td.varieties.join('\n') : '');
 
     } else if (s.type === 'footer') {
         show('f-footer');

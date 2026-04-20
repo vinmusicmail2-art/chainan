@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, send_from_directory, session, make_response
+from werkzeug.middleware.proxy_fix import ProxyFix
 from werkzeug.utils import secure_filename
 from datetime import timedelta
 import json
@@ -10,6 +11,9 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__)
+# Trust one proxy hop (Replit reverse proxy) so request.remote_addr
+# returns the real client IP from X-Forwarded-For, not 127.0.0.1
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
 
 # Secret key: must be set via SESSION_SECRET or SECRET_KEY env var.
 _secret = os.environ.get('SESSION_SECRET') or os.environ.get('SECRET_KEY')
