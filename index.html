@@ -1067,7 +1067,7 @@
             <div class="md:text-right">
                 <div class="mono mb-6">Контакт</div>
                 <div class="text-lg font-bold uppercase tracking-tighter" id="footer-contact">@chainan_tea</div>
-                <div class="serif-italic opacity-60" id="footer-note">Ежедневно до последнего гостя</div>
+                <div class="serif-italic opacity-60" id="footer-note"></div>
             </div>
         </footer>
 
@@ -1141,7 +1141,10 @@
                         if (teaData.note) {
                             const note = document.createElement('div');
                             note.className = 'tea-party-modal-section';
-                            note.innerHTML = teaData.note.replace(/\n/g, '<br>');
+                            teaData.note.split('\n').forEach((line, i, arr) => {
+                                note.appendChild(document.createTextNode(line));
+                                if (i < arr.length - 1) note.appendChild(document.createElement('br'));
+                            });
                             teaPartyModalBody.appendChild(note);
                         }
                         if (teaData.varieties && teaData.varieties.length) {
@@ -1259,13 +1262,27 @@
                     return;
                 }
                 if (teas[key]) {
-                    const noteLines = (teas[key].note || '').replace(/\n/g, '<br>');
+                    note.replaceChildren();
+                    const noteText = teas[key].note || '';
                     const varieties = (teas[key].varieties || []).join(', ');
-                    const parts = [];
-                    if (noteLines) parts.push(noteLines);
-                    if (varieties) parts.push(`Сорта в наличии: <span class="tea-varieties">${varieties}</span>.`);
-                    note.innerHTML = parts.join('<br>');
-                    note.style.display = parts.length ? '' : 'none';
+                    if (noteText) {
+                        noteText.split('\n').forEach((line, i, arr) => {
+                            note.appendChild(document.createTextNode(line));
+                            if (i < arr.length - 1) note.appendChild(document.createElement('br'));
+                        });
+                    }
+                    if (noteText && varieties) note.appendChild(document.createElement('br'));
+                    if (varieties) {
+                        const span = document.createElement('span');
+                        span.appendChild(document.createTextNode('Сорта в наличии: '));
+                        const vars = document.createElement('span');
+                        vars.className = 'tea-varieties';
+                        vars.textContent = varieties;
+                        span.appendChild(vars);
+                        span.appendChild(document.createTextNode('.'));
+                        note.appendChild(span);
+                    }
+                    note.style.display = (noteText || varieties) ? '' : 'none';
                 }
             });
 

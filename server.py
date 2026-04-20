@@ -39,7 +39,7 @@ CONTENT_FILE = os.path.join(os.path.dirname(__file__), 'content.json')
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif', 'webp', 'mp4', 'webm', 'mov', 'ogv'}
 
 # File types that must never be served via the static route
-BLOCKED_EXTENSIONS = {'.py', '.json', '.toml', '.lock', '.md', '.txt', '.ini', '.cfg', '.env'}
+BLOCKED_EXTENSIONS = {'.py', '.json', '.toml', '.lock', '.md', '.txt', '.ini', '.cfg', '.env', '.zip', '.tar', '.gz', '.bz2', '.rar', '.7z'}
 BLOCKED_PREFIXES = ('.', '__')
 
 # Brute-force tracking: {ip: [timestamp, ...]}
