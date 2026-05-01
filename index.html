@@ -447,23 +447,15 @@
             position: relative;
             overflow: hidden;
         }
-        .tea-entry-inner {
-            display: flex;
-            align-items: flex-start;
-            gap: 1.5rem;
-        }
-        .tea-entry-text {
-            flex: 1;
-            min-width: 0;
-        }
         .tea-entry-img {
-            width: 110px;
-            height: 180px;
-            object-fit: contain;
-            flex-shrink: 0;
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            object-position: center center;
             border-radius: 3px;
-            opacity: 0.88;
+            opacity: 0.9;
             display: block;
+            margin-bottom: 0.9rem;
         }
 
         .tea-watermark {
@@ -947,115 +939,87 @@
         <main>
             <div class="tea-entry">
                 <div class="tea-watermark">普洱</div>
-                <div class="tea-entry-inner">
-                    <div class="tea-entry-text">
-                        <h2 class="category-title">Пуэр</h2>
-                        <p class="description" data-tea-desc="puer">Ферментированный и выдержанный. Чай с глубоким потенциалом старения.</p>
-                        <div class="production-note" data-tea="puer">
-                            Шэн: живой, свежий, меняется с годами как вино.<br>
-                            Шу: ускоренная ферментация, ноты земли, леса и тёмного шоколада.<br>
-                            Сорта в наличии: <span class="tea-varieties">Шэн Пуэр, Шу Пуэр</span>.
-                        </div>
-                        <button class="modal-more-button modal-trigger" type="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="puer" data-modal-title="Пуэр">подробнее</button>
-                    </div>
-                    <img src="/tea-img-puer.png" alt="Пуэр" class="tea-entry-img">
+                <img src="/tea-img-puer.png" alt="Пуэр" class="tea-entry-img">
+                <h2 class="category-title">Пуэр</h2>
+                <p class="description" data-tea-desc="puer">Ферментированный и выдержанный. Чай с глубоким потенциалом старения.</p>
+                <div class="production-note" data-tea="puer">
+                    Шэн: живой, свежий, меняется с годами как вино.<br>
+                    Шу: ускоренная ферментация, ноты земли, леса и тёмного шоколада.<br>
+                    Сорта в наличии: <span class="tea-varieties">Шэн Пуэр, Шу Пуэр</span>.
                 </div>
+                <button class="modal-more-button modal-trigger" type="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="puer" data-modal-title="Пуэр">подробнее</button>
             </div>
 
             <div class="tea-entry">
                 <div class="tea-watermark">乌龙</div>
-                <div class="tea-entry-inner">
-                    <div class="tea-entry-text">
-                        <h2 class="category-title">Улун</h2>
-                        <p class="description" data-tea-desc="oolong">Огромный диапазон вкусов: от цветочного молочного до тёмного поджаристого.</p>
-                        <div class="production-note" data-tea="oolong">
-                            Частично окисленный чай (бирюзовый), находящийся между зелёным и красным.<br>
-                            Сорта в наличии: <span class="tea-varieties">Те Гуань Инь, Да Хун Пао</span>.
-                        </div>
-                        <button class="modal-more-button modal-trigger" type="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="oolong" data-modal-title="Улун">подробнее</button>
-                    </div>
-                    <img src="/tea-img-oolong.png" alt="Улун" class="tea-entry-img">
+                <img src="/tea-img-oolong.png" alt="Улун" class="tea-entry-img">
+                <h2 class="category-title">Улун</h2>
+                <p class="description" data-tea-desc="oolong">Огромный диапазон вкусов: от цветочного молочного до тёмного поджаристого.</p>
+                <div class="production-note" data-tea="oolong">
+                    Частично окисленный чай (бирюзовый), находящийся между зелёным и красным.<br>
+                    Сорта в наличии: <span class="tea-varieties">Те Гуань Инь, Да Хун Пао</span>.
                 </div>
+                <button class="modal-more-button modal-trigger" type="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="oolong" data-modal-title="Улун">подробнее</button>
             </div>
 
             <div class="tea-entry">
                 <div class="tea-watermark">绿茶</div>
-                <div class="tea-entry-inner">
-                    <div class="tea-entry-text">
-                        <h2 class="category-title">Зелёный чай</h2>
-                        <p class="description" data-tea-desc="green">Свежий, травянистый, иногда с морским или ореховым оттенком.</p>
-                        <div class="production-note" data-tea="green">
-                            Минимальная обработка, лист фиксируют сразу после сбора.<br>
-                            Сорта в наличии: <span class="tea-varieties">Лун Цзин, Би Ло Чунь, Маофэн</span>.
-                        </div>
-                        <button class="modal-more-button modal-trigger" type="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="green" data-modal-title="Зелёный чай">подробнее</button>
-                    </div>
-                    <img src="/tea-img-green.png" alt="Зелёный чай" class="tea-entry-img">
+                <img src="/tea-img-green.png" alt="Зелёный чай" class="tea-entry-img">
+                <h2 class="category-title">Зелёный чай</h2>
+                <p class="description" data-tea-desc="green">Свежий, травянистый, иногда с морским или ореховым оттенком.</p>
+                <div class="production-note" data-tea="green">
+                    Минимальная обработка, лист фиксируют сразу после сбора.<br>
+                    Сорта в наличии: <span class="tea-varieties">Лун Цзин, Би Ло Чунь, Маофэн</span>.
                 </div>
+                <button class="modal-more-button modal-trigger" type="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="green" data-modal-title="Зелёный чай">подробнее</button>
             </div>
 
             <div class="tea-entry">
                 <div class="tea-watermark">白茶</div>
-                <div class="tea-entry-inner">
-                    <div class="tea-entry-text">
-                        <h2 class="category-title">Белый чай</h2>
-                        <p class="description" data-tea-desc="white">Медовый, цветочный, очень мягкий. Самый деликатный вид.</p>
-                        <div class="production-note" data-tea="white">
-                            Листья просто вялят на воздухе без активного вмешательства.<br>
-                            Сорта в наличии: <span class="tea-varieties">Байхао Иньчжэнь, Бай Му Дань</span>.
-                        </div>
-                        <button class="modal-more-button modal-trigger" type="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="white" data-modal-title="Белый чай">подробнее</button>
-                    </div>
-                    <img src="/tea-img-white.png" alt="Белый чай" class="tea-entry-img">
+                <img src="/tea-img-white.png" alt="Белый чай" class="tea-entry-img">
+                <h2 class="category-title">Белый чай</h2>
+                <p class="description" data-tea-desc="white">Медовый, цветочный, очень мягкий. Самый деликатный вид.</p>
+                <div class="production-note" data-tea="white">
+                    Листья просто вялят на воздухе без активного вмешательства.<br>
+                    Сорта в наличии: <span class="tea-varieties">Байхао Иньчжэнь, Бай Му Дань</span>.
                 </div>
+                <button class="modal-more-button modal-trigger" type="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="white" data-modal-title="Белый чай">подробнее</button>
             </div>
 
             <div class="tea-entry">
                 <div class="tea-watermark">黄茶</div>
-                <div class="tea-entry-inner">
-                    <div class="tea-entry-text">
-                        <h2 class="category-title">Жёлтый чай</h2>
-                        <p class="description" data-tea-desc="yellow">Редкость. Похож на зелёный, но с выраженной мягкой сладостью.</p>
-                        <div class="production-note" data-tea="yellow">
-                            Технология «томления» (Мэнь Хуан) убирает излишнюю травянистость.<br>
-                            Сорта в наличии: <span class="tea-varieties">Цзюнь Шань Инь Чжэнь</span>.
-                        </div>
-                        <button class="modal-more-button modal-trigger" type="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="yellow" data-modal-title="Жёлтый чай">подробнее</button>
-                    </div>
-                    <img src="/tea-img-yellow.png" alt="Жёлтый чай" class="tea-entry-img">
+                <img src="/tea-img-yellow.png" alt="Жёлтый чай" class="tea-entry-img">
+                <h2 class="category-title">Жёлтый чай</h2>
+                <p class="description" data-tea-desc="yellow">Редкость. Похож на зелёный, но с выраженной мягкой сладостью.</p>
+                <div class="production-note" data-tea="yellow">
+                    Технология «томления» (Мэнь Хуан) убирает излишнюю травянистость.<br>
+                    Сорта в наличии: <span class="tea-varieties">Цзюнь Шань Инь Чжэнь</span>.
                 </div>
+                <button class="modal-more-button modal-trigger" type="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="yellow" data-modal-title="Жёлтый чай">подробнее</button>
             </div>
 
             <div class="tea-entry">
                 <div class="tea-watermark">红茶</div>
-                <div class="tea-entry-inner">
-                    <div class="tea-entry-text">
-                        <h2 class="category-title">Красный чай</h2>
-                        <p class="description" data-tea-desc="red">Мёд, сухофрукты, шоколад. То, что на Западе называют «чёрным».</p>
-                        <div class="production-note" data-tea="red">
-                            Полностью окисленный лист, дающий насыщенный прогревающий настой.<br>
-                            Сорта в наличии: <span class="tea-varieties">Дянь Хун, Цзинь Цзюнь Мэй, Дянь Хун Маофэн</span>.
-                        </div>
-                        <button class="modal-more-button modal-trigger" type="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="red" data-modal-title="Красный чай">подробнее</button>
-                    </div>
-                    <img src="/tea-img-red.png" alt="Красный чай" class="tea-entry-img">
+                <img src="/tea-img-red.png" alt="Красный чай" class="tea-entry-img">
+                <h2 class="category-title">Красный чай</h2>
+                <p class="description" data-tea-desc="red">Мёд, сухофрукты, шоколад. То, что на Западе называют «чёрным».</p>
+                <div class="production-note" data-tea="red">
+                    Полностью окисленный лист, дающий насыщенный прогревающий настой.<br>
+                    Сорта в наличии: <span class="tea-varieties">Дянь Хун, Цзинь Цзюнь Мэй, Дянь Хун Маофэн</span>.
                 </div>
+                <button class="modal-more-button modal-trigger" type="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="red" data-modal-title="Красный чай">подробнее</button>
             </div>
 
             <div class="tea-entry">
                 <div class="tea-watermark">黑茶</div>
-                <div class="tea-entry-inner">
-                    <div class="tea-entry-text">
-                        <h2 class="category-title">Чёрный чай</h2>
-                        <p class="description" data-tea-desc="black">Постферментированные чаи с плотным, «старым» вкусом.</p>
-                        <div class="production-note" data-tea="black">
-                            Хэй Ча — отдельный вид (не пуэр), проходящий специфическую ферментацию в кучах.<br>
-                            Сорта в наличии: <span class="tea-varieties">Люань, Фу Чжуань</span>.
-                        </div>
-                        <button class="modal-more-button modal-trigger" type="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="black" data-modal-title="Чёрный чай">подробнее</button>
-                    </div>
-                    <img src="/tea-img-black.png" alt="Чёрный чай" class="tea-entry-img">
+                <img src="/tea-img-black.png" alt="Чёрный чай" class="tea-entry-img">
+                <h2 class="category-title">Чёрный чай</h2>
+                <p class="description" data-tea-desc="black">Постферментированные чаи с плотным, «старым» вкусом.</p>
+                <div class="production-note" data-tea="black">
+                    Хэй Ча — отдельный вид (не пуэр), проходящий специфическую ферментацию в кучах.<br>
+                    Сорта в наличии: <span class="tea-varieties">Люань, Фу Чжуань</span>.
                 </div>
+                <button class="modal-more-button modal-trigger" type="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="black" data-modal-title="Чёрный чай">подробнее</button>
             </div>
         </main>
 
