@@ -1100,9 +1100,23 @@
                             const varsDiv = document.createElement('div');
                             varsDiv.className = 'tea-party-modal-section';
                             const strong = document.createElement('strong');
-                            strong.textContent = 'Сорта в наличии: ';
+                            strong.textContent = 'Сорта в наличии:';
                             varsDiv.appendChild(strong);
-                            varsDiv.appendChild(document.createTextNode(teaData.varieties.join(', ')));
+                            const ul = document.createElement('ul');
+                            ul.style.cssText = 'margin:0.5rem 0 0 0; padding-left:1.2rem; list-style:disc;';
+                            teaData.varieties.forEach(function(v) {
+                                if (v.startsWith('—')) {
+                                    const hdr = document.createElement('li');
+                                    hdr.style.cssText = 'list-style:none; margin-left:-1.2rem; margin-top:0.6rem; font-weight:bold; opacity:0.75; font-size:0.85em; letter-spacing:0.05em;';
+                                    hdr.textContent = v;
+                                    ul.appendChild(hdr);
+                                } else {
+                                    const li = document.createElement('li');
+                                    li.textContent = v;
+                                    ul.appendChild(li);
+                                }
+                            });
+                            varsDiv.appendChild(ul);
                             teaPartyModalBody.appendChild(varsDiv);
                         }
                     }
@@ -1216,25 +1230,37 @@
                 if (teas[key]) {
                     note.replaceChildren();
                     const noteText = teas[key].note || '';
-                    const varieties = (teas[key].varieties || []).join(', ');
+                    const varietiesArr = teas[key].varieties || [];
                     if (noteText) {
                         noteText.split('\n').forEach((line, i, arr) => {
                             note.appendChild(document.createTextNode(line));
                             if (i < arr.length - 1) note.appendChild(document.createElement('br'));
                         });
                     }
-                    if (noteText && varieties) note.appendChild(document.createElement('br'));
-                    if (varieties) {
-                        const span = document.createElement('span');
-                        span.appendChild(document.createTextNode('Сорта в наличии: '));
-                        const vars = document.createElement('span');
-                        vars.className = 'tea-varieties';
-                        vars.textContent = varieties;
-                        span.appendChild(vars);
-                        span.appendChild(document.createTextNode('.'));
-                        note.appendChild(span);
+                    if (varietiesArr.length) {
+                        if (noteText) note.appendChild(document.createElement('br'));
+                        const varLabel = document.createElement('span');
+                        varLabel.textContent = 'Сорта в наличии:';
+                        varLabel.style.fontWeight = 'bold';
+                        note.appendChild(varLabel);
+                        const ul = document.createElement('ul');
+                        ul.style.cssText = 'margin:0.3rem 0 0 0; padding-left:1.1rem; list-style:disc;';
+                        ul.className = 'tea-varieties';
+                        varietiesArr.forEach(function(v) {
+                            if (v.startsWith('—')) {
+                                const hdr = document.createElement('li');
+                                hdr.style.cssText = 'list-style:none; margin-left:-1.1rem; margin-top:0.4rem; font-weight:bold; opacity:0.7; font-size:0.82em;';
+                                hdr.textContent = v;
+                                ul.appendChild(hdr);
+                            } else {
+                                const li = document.createElement('li');
+                                li.textContent = v;
+                                ul.appendChild(li);
+                            }
+                        });
+                        note.appendChild(ul);
                     }
-                    note.style.display = (noteText || varieties) ? '' : 'none';
+                    note.style.display = (noteText || varietiesArr.length) ? '' : 'none';
                 }
             });
 
