@@ -6,6 +6,48 @@ uri = "file://oolong-header.png"
 type = "image"
 title = "generated_image"
 
+[[generated]]
+id = "re1W9-rUQZCd6nCWldM89"
+uri = "file://tea-img-puer.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "ww6mA73cJ_r-B8B3XNjVq"
+uri = "file://tea-img-oolong.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "oWyyeAuOohuqOXIb8dsEC"
+uri = "file://tea-img-green.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "2_3SA_E2FEmOL7DarP2uP"
+uri = "file://tea-img-white.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "yYr2QtHjijvSi15B638rQ"
+uri = "file://tea-img-yellow.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "C5lJf-vSoqwTH0eORx1yO"
+uri = "file://tea-img-red.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "KkMetVp7nBw0bvR0iM7go"
+uri = "file://tea-img-black.png"
+type = "image"
+title = "generated_image"
+
 [[outputs]]
 id = "w0VFch01s9iebcWrIoeP5"
 uri = "file://chainan_2026-04-19_01-37-59.zip"
