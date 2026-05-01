@@ -1,5 +1,10 @@
 uploads = []
-generated = []
+
+[[generated]]
+id = "gvFQ7BJ8ZfNTHv53kPkYB"
+uri = "file://oolong-header.png"
+type = "image"
+title = "generated_image"
 
 [[outputs]]
 id = "w0VFch01s9iebcWrIoeP5"
