@@ -64,10 +64,10 @@ title = "chainan_2026-04-21_01-44-39.zip"
 id = "yutoq_bqD7RwRKzajS_me"
 uri = "file://tea-img-puer.png"
 type = "image"
-title = "Пуэр — панорамная горизонтальная версия"
+title = "Эталон — пуэр"
 
 [[outputs]]
 id = "aA7apEv4uvY8eFPuU387O"
 uri = "file://tea-img-oolong.png"
 type = "image"
-title = "Улун — исправленная версия"
+title = "Улун — стиль пуэра"
