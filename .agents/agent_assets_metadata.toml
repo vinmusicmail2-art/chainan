@@ -48,6 +48,24 @@ uri = "file://tea-img-black.png"
 type = "image"
 title = "generated_image"
 
+[[generated]]
+id = "nXfXEsVLp21mpaJUkFYIl"
+uri = "file://tea-img-oolong-v1.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "JRjMDmqCCxDxofbHngjAQ"
+uri = "file://tea-img-oolong-v2.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "DftMjiK44HmNLzamET7Oi"
+uri = "file://tea-img-oolong-v3.png"
+type = "image"
+title = "generated_image"
+
 [[outputs]]
 id = "w0VFch01s9iebcWrIoeP5"
 uri = "file://chainan_2026-04-19_01-37-59.zip"
@@ -71,3 +89,21 @@ id = "aA7apEv4uvY8eFPuU387O"
 uri = "file://tea-img-oolong.png"
 type = "image"
 title = "Улун — без шаров"
+
+[[outputs]]
+id = "CFvm9E2At0yiCrsdUpDAH"
+uri = "file://tea-img-oolong-v1.png"
+type = "image"
+title = "Вариант 1"
+
+[[outputs]]
+id = "LWLmuoEM2Xqx2tzR-ly9Y"
+uri = "file://tea-img-oolong-v2.png"
+type = "image"
+title = "Вариант 2"
+
+[[outputs]]
+id = "w70ZgzoiSxiADy2hetS_v"
+uri = "file://tea-img-oolong-v3.png"
+type = "image"
+title = "Вариант 3"
