@@ -66,6 +66,24 @@ uri = "file://tea-img-oolong-v3.png"
 type = "image"
 title = "generated_image"
 
+[[generated]]
+id = "QPo8l84fXCbwVZVAlHpQg"
+uri = "file://tea-img-oolong-a.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "ybWdVRStXxUlEeMfpwmxI"
+uri = "file://tea-img-oolong-b.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "-3_kJ4C2P62ujHfUKkPRZ"
+uri = "file://tea-img-oolong-c.png"
+type = "image"
+title = "generated_image"
+
 [[outputs]]
 id = "w0VFch01s9iebcWrIoeP5"
 uri = "file://chainan_2026-04-19_01-37-59.zip"
@@ -137,3 +155,21 @@ id = "ifPqE5uJhAlLA4gE9FajY"
 uri = "file://tea-img-black.png"
 type = "image"
 title = "Чёрный 黑茶"
+
+[[outputs]]
+id = "I-TSVtlp_LDhxK214tsWd"
+uri = "file://tea-img-oolong-a.png"
+type = "image"
+title = "Вариант A"
+
+[[outputs]]
+id = "W8TNFRL-CvzXZcMi0H9Xt"
+uri = "file://tea-img-oolong-b.png"
+type = "image"
+title = "Вариант B"
+
+[[outputs]]
+id = "raisSoW3K_2fLPc-VsxOm"
+uri = "file://tea-img-oolong-c.png"
+type = "image"
+title = "Вариант C"
