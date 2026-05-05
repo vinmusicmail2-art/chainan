@@ -59,3 +59,9 @@ id = "S3Qd_0HcUsY0yQcq_FeFK"
 uri = "file://chainan_2026-04-21_01-44-39.zip"
 type = "unspecified"
 title = "chainan_2026-04-21_01-44-39.zip"
+
+[[outputs]]
+id = "yutoq_bqD7RwRKzajS_me"
+uri = "file://tea-img-puer.png"
+type = "image"
+title = "Иллюстрация Пуэр"
