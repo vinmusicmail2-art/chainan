@@ -88,7 +88,7 @@ title = "Эталон — пуэр"
 id = "aA7apEv4uvY8eFPuU387O"
 uri = "file://tea-img-oolong.png"
 type = "image"
-title = "Улун — каллиграфия"
+title = "Улун 乌龙"
 
 [[outputs]]
 id = "CFvm9E2At0yiCrsdUpDAH"
@@ -107,3 +107,33 @@ id = "w70ZgzoiSxiADy2hetS_v"
 uri = "file://tea-img-oolong-v3.png"
 type = "image"
 title = "Вариант 3"
+
+[[outputs]]
+id = "PfywwrBQEkikaf5sSYc1U"
+uri = "file://tea-img-green.png"
+type = "image"
+title = "Зелёный 绿茶"
+
+[[outputs]]
+id = "3FN1eAB6h-qSzcDI9lCoI"
+uri = "file://tea-img-white.png"
+type = "image"
+title = "Белый 白茶"
+
+[[outputs]]
+id = "T6LuPqql3ZA0wLM36TWVO"
+uri = "file://tea-img-yellow.png"
+type = "image"
+title = "Жёлтый 黄茶"
+
+[[outputs]]
+id = "tUjTB5xKwiluHMFj077qC"
+uri = "file://tea-img-red.png"
+type = "image"
+title = "Красный 红茶"
+
+[[outputs]]
+id = "ifPqE5uJhAlLA4gE9FajY"
+uri = "file://tea-img-black.png"
+type = "image"
+title = "Чёрный 黑茶"
