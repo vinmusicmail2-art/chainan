@@ -84,6 +84,12 @@ uri = "file://tea-img-oolong-c.png"
 type = "image"
 title = "generated_image"
 
+[[generated]]
+id = "PVb2zxVf9jVAD1hNPC5qj"
+uri = "file://tea-img-gaba.png"
+type = "image"
+title = "generated_image"
+
 [[outputs]]
 id = "w0VFch01s9iebcWrIoeP5"
 uri = "file://chainan_2026-04-19_01-37-59.zip"
