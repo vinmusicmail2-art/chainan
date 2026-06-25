@@ -1124,9 +1124,10 @@
         <div id="gallery-lightbox"></div>
 
         <!-- Gallery Section -->
-        <section id="gallery" style="display:none">
+        <section id="gallery">
             <div class="gallery-heading mono">галерея</div>
             <div class="gallery-grid" id="gallery-grid"></div>
+            <div id="gallery-empty" class="mono" style="opacity:0.3;font-size:0.6rem;letter-spacing:0.12em;display:none">материалы скоро появятся</div>
         </section>
 
         <div class="ink-line"></div>
@@ -1429,8 +1430,13 @@
         function renderGallery(items) {
             const section = document.getElementById('gallery');
             const grid = document.getElementById('gallery-grid');
-            if (!items || !items.length) { section.style.display = 'none'; return; }
-            section.style.display = '';
+            const empty = document.getElementById('gallery-empty');
+            if (!items || !items.length) {
+                grid.innerHTML = '';
+                if (empty) empty.style.display = '';
+                return;
+            }
+            if (empty) empty.style.display = 'none';
             grid.innerHTML = '';
             items.forEach(function(item) {
                 const cell = document.createElement('div');
