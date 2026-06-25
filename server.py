@@ -31,8 +31,8 @@ app.config['SESSION_COOKIE_SECURE'] = True
 # Sessions expire after 8 hours of inactivity
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=8)
 
-# Limit file uploads and JSON body to 10 MB
-app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024
+# Limit file uploads and JSON body to 100 MB
+app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024
 
 ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'chainan2002')
 if ADMIN_PASSWORD == 'chainan2002':
@@ -228,6 +228,41 @@ def upload_image():
     new_name = f"{media_prefix}_{time.time_ns()}.{ext}"
     file.save(os.path.join(os.path.dirname(__file__), new_name))
     return jsonify({'ok': True, 'url': f'/{new_name}'})
+
+
+@app.route('/api/gallery/add', methods=['POST'])
+def gallery_add():
+    if not session.get('logged_in'):
+        return jsonify({'error': 'Не авторизован'}), 401
+    data = request.get_json(silent=True)
+    if not data or not data.get('url'):
+        return jsonify({'error': 'Нет URL'}), 400
+    c = load_content()
+    if 'gallery' not in c:
+        c['gallery'] = []
+    item = {
+        'id': str(time.time_ns()),
+        'url': data['url'],
+        'caption': data.get('caption', ''),
+        'type': data.get('type', 'image')
+    }
+    c['gallery'].append(item)
+    save_content(c)
+    return jsonify({'ok': True, 'item': item})
+
+
+@app.route('/api/gallery/delete', methods=['POST'])
+def gallery_delete():
+    if not session.get('logged_in'):
+        return jsonify({'error': 'Не авторизован'}), 401
+    data = request.get_json(silent=True)
+    if not data or not data.get('id'):
+        return jsonify({'error': 'Нет id'}), 400
+    c = load_content()
+    if 'gallery' in c:
+        c['gallery'] = [item for item in c['gallery'] if item.get('id') != data['id']]
+    save_content(c)
+    return jsonify({'ok': True})
 
 
 @app.errorhandler(404)

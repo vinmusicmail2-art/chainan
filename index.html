@@ -476,6 +476,93 @@
             transform: translateY(0);
         }
 
+        /* Gallery */
+        #gallery {
+            margin-top: 5rem;
+            scroll-margin-top: 2rem;
+        }
+
+        .gallery-heading {
+            font-family: 'Yanone Kaffeesatz', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            opacity: 0.55;
+            margin-bottom: 1.4rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 6px;
+        }
+
+        .gallery-cell {
+            overflow: hidden;
+            border-radius: 2px;
+            cursor: pointer;
+            background: rgba(45,36,30,0.08);
+            aspect-ratio: 1;
+        }
+
+        .gallery-cell img,
+        .gallery-cell video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.35s ease, opacity 0.35s ease;
+        }
+
+        .gallery-cell:hover img,
+        .gallery-cell:hover video {
+            transform: scale(1.04);
+            opacity: 0.88;
+        }
+
+        .gallery-caption {
+            font-size: 0.6rem;
+            letter-spacing: 0.08em;
+            opacity: 0.5;
+            margin-top: 0.3rem;
+            text-align: center;
+        }
+
+        /* Lightbox */
+        #gallery-lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(20,14,10,0.93);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            cursor: zoom-out;
+        }
+
+        #gallery-lightbox.open { display: flex; }
+
+        #gallery-lightbox img,
+        #gallery-lightbox video {
+            max-width: 90vw;
+            max-height: 88vh;
+            object-fit: contain;
+            border-radius: 2px;
+            box-shadow: 0 8px 60px rgba(0,0,0,0.7);
+        }
+
+        #gallery-lightbox-close {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.5rem;
+            color: rgba(255,255,255,0.7);
+            font-size: 1.8rem;
+            cursor: pointer;
+            line-height: 1;
+            user-select: none;
+        }
+
         .tea-entry p.description {
             font-family: 'Great Vibes', cursive;
             font-size: 1.6rem;
@@ -593,7 +680,7 @@
 
         <header style="margin-bottom: calc(8rem - 2cm)">
             <div class="mono mb-10 text-center" id="site-top-line">осн. 2002 / каталог / ростов-на-дону / москва</div>
-            <div class="mono mb-10 text-center" style="margin-top:-37px;margin-left:44px">галерея / т.<strong>8-989-957-60-43</strong></div>
+            <div class="mono mb-10 text-center" style="margin-top:-37px;margin-left:44px"><a href="#gallery" id="gallery-header-link" style="color:inherit;text-decoration:none;">галерея</a> / т.<strong>8-989-957-60-43</strong></div>
             
             <div class="header-box">
                 <div class="corner corner-tl"></div>
@@ -1033,6 +1120,15 @@
             </div>
         </main>
 
+        <!-- Gallery Lightbox -->
+        <div id="gallery-lightbox"></div>
+
+        <!-- Gallery Section -->
+        <section id="gallery" style="display:none">
+            <div class="gallery-heading mono">галерея</div>
+            <div class="gallery-grid" id="gallery-grid"></div>
+        </section>
+
         <div class="ink-line"></div>
 
         <footer class="mt-24 grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -1311,11 +1407,66 @@
             }
         }
 
+        // Gallery lightbox
+        const lightbox = document.getElementById('gallery-lightbox');
+        const lightboxClose = document.getElementById('gallery-lightbox-close');
+        function openLightbox(url, type) {
+            lightbox.innerHTML = '<span id="gallery-lightbox-close">&times;</span>';
+            const el = document.createElement(type === 'video' ? 'video' : 'img');
+            el.src = url;
+            if (type === 'video') { el.controls = true; el.autoplay = true; }
+            lightbox.appendChild(el);
+            lightbox.classList.add('open');
+            document.getElementById('gallery-lightbox-close').onclick = closeLightbox;
+        }
+        function closeLightbox() {
+            lightbox.classList.remove('open');
+            lightbox.innerHTML = '';
+        }
+        lightbox.addEventListener('click', function(e) { if (e.target === lightbox) closeLightbox(); });
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
+
+        function renderGallery(items) {
+            const section = document.getElementById('gallery');
+            const grid = document.getElementById('gallery-grid');
+            if (!items || !items.length) { section.style.display = 'none'; return; }
+            section.style.display = '';
+            grid.innerHTML = '';
+            items.forEach(function(item) {
+                const cell = document.createElement('div');
+                cell.className = 'gallery-cell';
+                const isVideo = item.type === 'video';
+                const media = document.createElement(isVideo ? 'video' : 'img');
+                media.src = item.url;
+                if (isVideo) { media.muted = true; media.loop = true; media.setAttribute('playsinline', ''); }
+                media.alt = item.caption || '';
+                cell.appendChild(media);
+                if (item.caption) {
+                    const cap = document.createElement('div');
+                    cap.className = 'gallery-caption mono';
+                    cap.textContent = item.caption;
+                    cell.appendChild(cap);
+                }
+                cell.addEventListener('click', function() { openLightbox(item.url, item.type || 'image'); });
+                cell.addEventListener('mouseenter', function() { if (isVideo) media.play(); });
+                cell.addEventListener('mouseleave', function() { if (isVideo) media.pause(); });
+                grid.appendChild(cell);
+            });
+        }
+
+        // Scroll to gallery on header link click
+        document.getElementById('gallery-header-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            const sec = document.getElementById('gallery');
+            if (sec) sec.scrollIntoView({ behavior: 'smooth' });
+        });
+
         fetch('/api/content')
             .then(r => r.json())
             .then(data => {
                 siteContent = data;
                 applyContent();
+                renderGallery(data.gallery || []);
             })
             .catch(() => {
                 fetch('/api/teas').then(r => r.json()).then(teas => {
