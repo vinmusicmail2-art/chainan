@@ -547,6 +547,7 @@
         .tea-assistant-input-row {
             display: flex;
             margin-bottom: 1.25rem;
+            position: relative;
         }
         .tea-assistant-input {
             font-family: 'JetBrains Mono', monospace;
@@ -555,7 +556,7 @@
             border: 1px solid rgba(55,42,34,0.4);
             background: rgba(255,255,255,0.18);
             color: var(--ink);
-            padding: 0.75rem 1rem;
+            padding: 0.75rem 1rem 2.8rem 1rem;
             outline: none;
             width: 100%;
             min-height: 132px;
@@ -563,6 +564,22 @@
             box-sizing: border-box;
         }
         .tea-assistant-input::placeholder { opacity: 0.45; }
+        .tea-assistant-send {
+            position: absolute;
+            bottom: 0.6rem;
+            right: 0.6rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            background: var(--accent);
+            color: var(--paper);
+            border: none;
+            padding: 0.45rem 1rem;
+            cursor: pointer;
+            transition: opacity 0.15s;
+        }
+        .tea-assistant-send:hover { opacity: 0.8; }
         .tea-assistant-btn-main {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.65rem;
@@ -876,6 +893,7 @@
             <p class="tea-assistant-subtitle">Здравствуйте. Я помогу подобрать чай, церемонию, обучение или подарок. Давайте начнём.</p>
             <div class="tea-assistant-input-row">
                 <textarea class="tea-assistant-input" placeholder="Как к вам обращаться?" id="ta-name-input"></textarea>
+                <button class="tea-assistant-send" type="button">Отправить</button>
             </div>
             <hr class="tea-assistant-divider">
             <div class="tea-assistant-options">
