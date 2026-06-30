@@ -476,6 +476,163 @@
             transform: translateY(0);
         }
 
+        /* Tea Assistant Block */
+        .tea-assistant {
+            border: 1px solid rgba(55,42,34,0.35);
+            padding: 2rem 2rem 1.5rem;
+            margin-bottom: 0;
+            position: relative;
+            background: transparent;
+        }
+        .tea-assistant-stamp {
+            position: absolute;
+            top: 1rem;
+            left: 1.2rem;
+            font-family: 'WDXL Lubrifont TC', serif;
+            font-size: 0.85rem;
+            line-height: 1.15;
+            letter-spacing: 0.04em;
+            color: var(--accent);
+            border: 1.5px solid var(--accent);
+            padding: 0.2rem 0.35rem;
+            opacity: 0.85;
+            white-space: nowrap;
+        }
+        .tea-assistant-title {
+            font-family: 'Yanone Kaffeesatz', sans-serif;
+            font-size: 1.55rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--accent);
+            text-align: center;
+            margin: 0 0 0.5rem;
+        }
+        .tea-assistant-subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-align: center;
+            opacity: 0.65;
+            margin-bottom: 1.2rem;
+        }
+        .tea-assistant-question {
+            font-family: 'Yanone Kaffeesatz', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-align: center;
+            opacity: 0.8;
+            margin-bottom: 0.75rem;
+        }
+        .tea-assistant-input-row {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            align-items: stretch;
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+        }
+        .tea-assistant-input {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            border: 1px solid rgba(55,42,34,0.4);
+            background: rgba(255,255,255,0.18);
+            color: var(--ink);
+            padding: 0.55rem 1rem;
+            outline: none;
+            min-width: 180px;
+            flex: 1 1 180px;
+            max-width: 260px;
+        }
+        .tea-assistant-input::placeholder { opacity: 0.45; }
+        .tea-assistant-btn-main {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            background: var(--accent);
+            color: var(--paper);
+            border: none;
+            padding: 0.55rem 1.2rem;
+            cursor: pointer;
+            white-space: nowrap;
+            min-height: 44px;
+            transition: opacity 0.15s;
+        }
+        .tea-assistant-btn-main:hover { opacity: 0.82; }
+        .tea-assistant-btn-skip {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            background: transparent;
+            color: var(--ink);
+            border: 1px solid rgba(55,42,34,0.4);
+            padding: 0.55rem 1rem;
+            cursor: pointer;
+            white-space: nowrap;
+            min-height: 44px;
+            transition: opacity 0.15s;
+        }
+        .tea-assistant-btn-skip:hover { opacity: 0.6; }
+        .tea-assistant-divider {
+            border: none;
+            border-top: 1px solid rgba(55,42,34,0.2);
+            margin: 0 0 1.2rem;
+        }
+        .tea-assistant-options {
+            display: flex;
+            gap: 0;
+        }
+        .tea-assistant-option {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 0.5rem 0.6rem;
+            border-right: 1px solid rgba(55,42,34,0.2);
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .tea-assistant-option:last-child { border-right: none; }
+        .tea-assistant-option:hover { background: rgba(55,42,34,0.05); }
+        .tea-assistant-option-icon {
+            font-size: 1.1rem;
+            margin-bottom: 0.35rem;
+            opacity: 0.75;
+        }
+        .tea-assistant-option-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.58rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            color: var(--accent);
+        }
+        .tea-assistant-option-desc {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.52rem;
+            letter-spacing: 0.06em;
+            opacity: 0.55;
+            line-height: 1.4;
+        }
+        @media (max-width: 640px) {
+            .tea-assistant { padding: 1.5rem 1rem 1rem; }
+            .tea-assistant-title { font-size: 1.15rem; letter-spacing: 0.1em; }
+            .tea-assistant-input { max-width: 100%; }
+            .tea-assistant-btn-main,
+            .tea-assistant-btn-skip { width: 100%; justify-content: center; }
+            .tea-assistant-options { flex-direction: column; }
+            .tea-assistant-option { border-right: none; border-bottom: 1px solid rgba(55,42,34,0.2); flex-direction: row; gap: 0.75rem; text-align: left; align-items: center; }
+            .tea-assistant-option:last-child { border-bottom: none; }
+            .tea-assistant-option-icon { margin-bottom: 0; font-size: 1.3rem; }
+        }
+
         /* Gallery */
         #gallery {
             margin-top: 5rem;
@@ -697,18 +854,46 @@
             </div>
         </header>
 
-        <h2 class="category-title" style="margin-bottom: 0.8rem;" id="projects-title">Наши Проекты:</h2>
-
-        <nav class="nav-panel">
-            <div class="nav-panel-item nav-panel-top modal-trigger" tabindex="0" role="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="chairman-club" data-modal-title="Клуб любителей чая им. Председателя С.">Клуб любителей чая им. Председателя С. — беседы о чае, о философии и выздоровлении духа и тела</div>
-            <div class="nav-panel-row">
-                <div class="nav-panel-item modal-trigger" tabindex="0" role="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="everyday-tea" data-modal-title="Чай на каждый день">Чай на каждый день</div>
-                <div class="nav-panel-item modal-trigger" tabindex="0" role="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="tea-ceremony" data-modal-title="Чайная церемония — проведение и обучение">Чайная церемония —<br>проведение и обучение</div>
-                <div class="nav-panel-item modal-trigger" tabindex="0" role="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="tea-party" data-modal-title="Чайная пьянка — чайно-музыкальные вечера">Чайная пьянка —<br>чайно-музыкальные вечера</div>
-                <div class="nav-panel-item modal-trigger" tabindex="0" role="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="sale" data-modal-title="Распродажа" style="border-right:none">Распродажа</div>
+        <!-- Tea Assistant Block -->
+        <div class="tea-assistant">
+            <div class="tea-assistant-stamp">茶<br>南</div>
+            <h2 class="tea-assistant-title">Чайный помощник «Чайнань»</h2>
+            <p class="tea-assistant-subtitle">Здравствуйте. Я помогу подобрать чай, церемонию, обучение или подарок. Давайте начнём.</p>
+            <p class="tea-assistant-question">Как к вам обращаться?</p>
+            <div class="tea-assistant-input-row">
+                <input class="tea-assistant-input" type="text" placeholder="Ваше имя" id="ta-name-input">
+                <button class="tea-assistant-btn-main" type="button">Продолжить</button>
+                <button class="tea-assistant-btn-skip" type="button">Пропустить</button>
             </div>
-            <div class="nav-panel-bottom modal-trigger" tabindex="0" role="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="custom-order" data-modal-title="Чай на заказ">Чай на заказ — для оптовых покупателей и эксклюзив для ценителей</div>
-        </nav>
+            <hr class="tea-assistant-divider">
+            <div class="tea-assistant-options">
+                <div class="tea-assistant-option">
+                    <div class="tea-assistant-option-icon">🍃</div>
+                    <div class="tea-assistant-option-title">Подобрать чай</div>
+                    <div class="tea-assistant-option-desc">найду чай под ваш вкус и задачу</div>
+                </div>
+                <div class="tea-assistant-option">
+                    <div class="tea-assistant-option-icon">🎁</div>
+                    <div class="tea-assistant-option-title">Подарок</div>
+                    <div class="tea-assistant-option-desc">чай, набор или сертификат</div>
+                </div>
+                <div class="tea-assistant-option">
+                    <div class="tea-assistant-option-icon">🫖</div>
+                    <div class="tea-assistant-option-title">Церемония</div>
+                    <div class="tea-assistant-option-desc">проведём чайную церемонию</div>
+                </div>
+                <div class="tea-assistant-option">
+                    <div class="tea-assistant-option-icon">📖</div>
+                    <div class="tea-assistant-option-title">Обучение</div>
+                    <div class="tea-assistant-option-desc">научим Гунфу Ча и чайной культуре</div>
+                </div>
+                <div class="tea-assistant-option">
+                    <div class="tea-assistant-option-icon">🍵</div>
+                    <div class="tea-assistant-option-title">Просто смотрю</div>
+                    <div class="tea-assistant-option-desc">я пока изучаю ваш сайт</div>
+                </div>
+            </div>
+        </div>
 
         <div class="tea-party-backdrop" aria-hidden="true"></div>
 
@@ -1129,6 +1314,20 @@
             <div class="gallery-grid" id="gallery-grid"></div>
             <div id="gallery-empty" class="mono" style="opacity:0.3;font-size:0.6rem;letter-spacing:0.12em;display:none">материалы скоро появятся</div>
         </section>
+
+        <!-- Наши Проекты (перемещён сюда) -->
+        <h2 class="category-title" style="margin-bottom: 0.8rem; margin-top: 4rem;" id="projects-title">Наши Проекты:</h2>
+
+        <nav class="nav-panel">
+            <div class="nav-panel-item nav-panel-top modal-trigger" tabindex="0" role="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="chairman-club" data-modal-title="Клуб любителей чая им. Председателя С.">Клуб любителей чая им. Председателя С. — беседы о чае, о философии и выздоровлении духа и тела</div>
+            <div class="nav-panel-row">
+                <div class="nav-panel-item modal-trigger" tabindex="0" role="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="everyday-tea" data-modal-title="Чай на каждый день">Чай на каждый день</div>
+                <div class="nav-panel-item modal-trigger" tabindex="0" role="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="tea-ceremony" data-modal-title="Чайная церемония — проведение и обучение">Чайная церемония —<br>проведение и обучение</div>
+                <div class="nav-panel-item modal-trigger" tabindex="0" role="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="tea-party" data-modal-title="Чайная пьянка — чайно-музыкальные вечера">Чайная пьянка —<br>чайно-музыкальные вечера</div>
+                <div class="nav-panel-item modal-trigger" tabindex="0" role="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="sale" data-modal-title="Распродажа" style="border-right:none">Распродажа</div>
+            </div>
+            <div class="nav-panel-bottom modal-trigger" tabindex="0" role="button" aria-haspopup="dialog" aria-expanded="false" data-modal-key="custom-order" data-modal-title="Чай на заказ">Чай на заказ — для оптовых покупателей и эксклюзив для ценителей</div>
+        </nav>
 
         <div class="ink-line"></div>
 
