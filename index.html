@@ -603,35 +603,44 @@
         }
         .tea-assistant-options {
             display: flex;
+            flex-wrap: wrap;
             gap: 0;
         }
         .tea-assistant-option {
-            flex: 1;
+            flex: 0 0 33.333%;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            padding: 0.4rem 0.4rem;
+            padding: 0.5rem 0.6rem;
             border-right: 1px solid rgba(55,42,34,0.2);
+            border-bottom: 1px solid rgba(55,42,34,0.2);
             cursor: pointer;
             transition: background 0.15s;
+            box-sizing: border-box;
         }
-        .tea-assistant-option:last-child { border-right: none; }
         .tea-assistant-option:hover { background: rgba(55,42,34,0.05); }
         .tea-assistant-option-icon {
-            font-size: 1rem;
-            margin-bottom: 0.2rem;
+            font-size: 1.1rem;
+            margin-bottom: 0.35rem;
             opacity: 0.75;
         }
         .tea-assistant-option-title {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.55rem;
-            letter-spacing: 0.08em;
+            font-size: 0.58rem;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
             font-weight: 700;
+            margin-bottom: 0.25rem;
             color: var(--accent);
         }
-        .tea-assistant-option-desc { display: none; }
+        .tea-assistant-option-desc {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.52rem;
+            letter-spacing: 0.06em;
+            opacity: 0.55;
+            line-height: 1.4;
+        }
         @media (max-width: 640px) {
             .tea-assistant { padding: 1.5rem 1rem 1rem; }
             .tea-assistant-title { font-size: 1.15rem; letter-spacing: 0.1em; }
