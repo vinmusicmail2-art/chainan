@@ -546,11 +546,7 @@
         }
         .tea-assistant-input-row {
             display: flex;
-            gap: 0.5rem;
-            justify-content: center;
-            align-items: stretch;
             margin-bottom: 1.25rem;
-            flex-wrap: wrap;
         }
         .tea-assistant-input {
             font-family: 'JetBrains Mono', monospace;
@@ -559,11 +555,12 @@
             border: 1px solid rgba(55,42,34,0.4);
             background: rgba(255,255,255,0.18);
             color: var(--ink);
-            padding: 0.55rem 1rem;
+            padding: 0.75rem 1rem;
             outline: none;
-            min-width: 180px;
-            flex: 1 1 180px;
-            max-width: 260px;
+            width: 100%;
+            min-height: 132px;
+            resize: none;
+            box-sizing: border-box;
         }
         .tea-assistant-input::placeholder { opacity: 0.45; }
         .tea-assistant-btn-main {
@@ -878,9 +875,7 @@
             <h2 class="tea-assistant-title">Чайный помощник «Чайнань»</h2>
             <p class="tea-assistant-subtitle">Здравствуйте. Я помогу подобрать чай, церемонию, обучение или подарок. Давайте начнём.</p>
             <div class="tea-assistant-input-row">
-                <input class="tea-assistant-input" type="text" placeholder="Как к вам обращаться?" id="ta-name-input">
-                <button class="tea-assistant-btn-main" type="button">Продолжить</button>
-                <button class="tea-assistant-btn-skip" type="button">Пропустить</button>
+                <textarea class="tea-assistant-input" placeholder="Как к вам обращаться?" id="ta-name-input"></textarea>
             </div>
             <hr class="tea-assistant-divider">
             <div class="tea-assistant-options">
