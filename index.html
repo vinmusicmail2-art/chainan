@@ -611,7 +611,7 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            padding: 0.5rem 0.6rem;
+            padding: 0.4rem 0.4rem;
             border-right: 1px solid rgba(55,42,34,0.2);
             cursor: pointer;
             transition: background 0.15s;
@@ -619,26 +619,19 @@
         .tea-assistant-option:last-child { border-right: none; }
         .tea-assistant-option:hover { background: rgba(55,42,34,0.05); }
         .tea-assistant-option-icon {
-            font-size: 1.1rem;
-            margin-bottom: 0.35rem;
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
             opacity: 0.75;
         }
         .tea-assistant-option-title {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.58rem;
-            letter-spacing: 0.1em;
+            font-size: 0.55rem;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
             font-weight: 700;
-            margin-bottom: 0.25rem;
             color: var(--accent);
         }
-        .tea-assistant-option-desc {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.52rem;
-            letter-spacing: 0.06em;
-            opacity: 0.55;
-            line-height: 1.4;
-        }
+        .tea-assistant-option-desc { display: none; }
         @media (max-width: 640px) {
             .tea-assistant { padding: 1.5rem 1rem 1rem; }
             .tea-assistant-title { font-size: 1.15rem; letter-spacing: 0.1em; }
