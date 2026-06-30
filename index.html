@@ -517,6 +517,24 @@
             opacity: 0.65;
             margin-bottom: 1.2rem;
         }
+        .tea-assistant-dialog {
+            border: 1px solid rgba(55,42,34,0.22);
+            background: rgba(55,42,34,0.04);
+            padding: 0.75rem 1.1rem;
+            margin: 0 auto 1rem;
+            max-width: 480px;
+            position: relative;
+        }
+        .tea-assistant-dialog::before {
+            content: '◂';
+            position: absolute;
+            left: -14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.1rem;
+            color: rgba(55,42,34,0.22);
+            line-height: 1;
+        }
         .tea-assistant-question {
             font-family: 'Yanone Kaffeesatz', sans-serif;
             font-size: 1rem;
@@ -524,7 +542,7 @@
             text-transform: uppercase;
             text-align: center;
             opacity: 0.8;
-            margin-bottom: 0.75rem;
+            margin: 0;
         }
         .tea-assistant-input-row {
             display: flex;
@@ -859,7 +877,9 @@
             <div class="tea-assistant-stamp">茶<br>南</div>
             <h2 class="tea-assistant-title">Чайный помощник «Чайнань»</h2>
             <p class="tea-assistant-subtitle">Здравствуйте. Я помогу подобрать чай, церемонию, обучение или подарок. Давайте начнём.</p>
-            <p class="tea-assistant-question">Как к вам обращаться?</p>
+            <div class="tea-assistant-dialog">
+                <p class="tea-assistant-question">Как к вам обращаться?</p>
+            </div>
             <div class="tea-assistant-input-row">
                 <input class="tea-assistant-input" type="text" placeholder="Ваше имя" id="ta-name-input">
                 <button class="tea-assistant-btn-main" type="button">Продолжить</button>
