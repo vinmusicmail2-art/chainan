@@ -90,6 +90,12 @@ uri = "file://tea-img-gaba.png"
 type = "image"
 title = "generated_image"
 
+[[generated]]
+id = "xRQOu4rt4IzYuEdSXQ-6k"
+uri = "file://header-bg.png"
+type = "image"
+title = "chinese tea shop shelves banner"
+
 [[outputs]]
 id = "w0VFch01s9iebcWrIoeP5"
 uri = "file://chainan_2026-04-19_01-37-59.zip"
@@ -179,3 +185,9 @@ id = "raisSoW3K_2fLPc-VsxOm"
 uri = "file://tea-img-oolong-c.png"
 type = "image"
 title = "Вариант C"
+
+[[outputs]]
+id = "DRvcfdKalMk9IZWzvQHqp"
+uri = "file://header-bg.png"
+type = "image"
+title = "Фон чайной лавки — предпросмотр"
