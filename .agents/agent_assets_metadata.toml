@@ -148,7 +148,7 @@ title = "Зелёный 绿茶"
 id = "3FN1eAB6h-qSzcDI9lCoI"
 uri = "file://tea-img-white.png"
 type = "image"
-title = "Белый 白茶"
+title = "tea-img-white.png"
 
 [[outputs]]
 id = "T6LuPqql3ZA0wLM36TWVO"
