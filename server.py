@@ -138,7 +138,11 @@ def static_files(filename):
     ext = os.path.splitext(filename)[1].lower()
     if ext in BLOCKED_EXTENSIONS:
         return jsonify({'error': 'Forbidden'}), 403
-    return send_from_directory('.', filename)
+    response = send_from_directory('.', filename)
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '0'
+    return response
 
 
 # --- API ---
