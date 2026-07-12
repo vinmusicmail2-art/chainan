@@ -326,16 +326,15 @@
 
         .header-box {
             border: 1px solid rgba(45, 36, 30, 0.15);
-            padding: 0;
+            padding: 40px 20px;
             text-align: center;
             margin-bottom: 0.8rem;
             position: relative;
             background-image:
-                url("/header-bg-new.png");
-            background-size: contain;
-            background-position: center center;
-            background-repeat: no-repeat;
-            aspect-ratio: 1024 / 563;
+                linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.25)),
+                url("/header-bg.png");
+            background-size: cover;
+            background-position: center 85%;
         }
 
         .corner {
@@ -348,15 +347,6 @@
         .corner-tr { top: 7px; right: 7px; border-top: 1.5px solid var(--ink); border-right: 1.5px solid var(--ink); }
         .corner-bl { bottom: 7px; left: 7px; border-bottom: 1.5px solid var(--ink); border-left: 1.5px solid var(--ink); }
         .corner-br { bottom: 7px; right: 7px; border-bottom: 1.5px solid var(--ink); border-right: 1.5px solid var(--ink); }
-
-        .header-box .corner,
-        .header-box .stamp,
-        .header-box .header-monogram,
-        .header-box .header-logo,
-        .header-box h1,
-        .header-box .subtitle-mono {
-            display: none !important;
-        }
 
         .header-monogram {
             font-family: 'JetBrains Mono', monospace;
@@ -413,9 +403,8 @@
             display: block;
             overflow-wrap: break-word;
             word-break: break-word;
-            color: #ffffff;
-            -webkit-text-stroke: 1.5px #2d241e;
-            text-shadow: 0px 2px 8px #2d241e;
+            color: #EDE0C4;
+            text-shadow: 0px 3px 0px rgba(0,0,0,0.6), 0px 5px 12px rgba(0,0,0,0.45);
         }
 
         .category-title {
@@ -794,7 +783,6 @@
             filter: contrast(110%) brightness(95%);
             font-family: 'Yanone Kaffeesatz', sans-serif;
             font-weight: 700;
-            text-shadow: none;
         }
         .subtitle-mono {
             font-family: 'JetBrains Mono', monospace;
@@ -804,8 +792,8 @@
             opacity: 1;
             margin-top: 2mm;
             margin-bottom: 0;
-            color: #2d241e;
-            text-shadow: none;
+            color: #F0E6CF;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.6);
         }
 
         /* ====================================================
