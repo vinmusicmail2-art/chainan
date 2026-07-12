@@ -326,14 +326,16 @@
 
         .header-box {
             border: 1px solid rgba(45, 36, 30, 0.15);
-            padding: 40px 20px;
+            padding: 0;
             text-align: center;
             margin-bottom: 0.8rem;
             position: relative;
             background-image:
                 url("/header-bg-new.png");
-            background-size: cover;
-            background-position: center 50%;
+            background-size: contain;
+            background-position: center center;
+            background-repeat: no-repeat;
+            aspect-ratio: 1024 / 563;
         }
 
         .corner {
@@ -346,6 +348,15 @@
         .corner-tr { top: 7px; right: 7px; border-top: 1.5px solid var(--ink); border-right: 1.5px solid var(--ink); }
         .corner-bl { bottom: 7px; left: 7px; border-bottom: 1.5px solid var(--ink); border-left: 1.5px solid var(--ink); }
         .corner-br { bottom: 7px; right: 7px; border-bottom: 1.5px solid var(--ink); border-right: 1.5px solid var(--ink); }
+
+        .header-box .corner,
+        .header-box .stamp,
+        .header-box .header-monogram,
+        .header-box .header-logo,
+        .header-box h1,
+        .header-box .subtitle-mono {
+            display: none !important;
+        }
 
         .header-monogram {
             font-family: 'JetBrains Mono', monospace;
