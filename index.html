@@ -326,15 +326,25 @@
 
         .header-box {
             border: 1px solid rgba(45, 36, 30, 0.15);
-            padding: 40px 20px;
+            padding: 0;
             text-align: center;
             margin-bottom: 0.8rem;
             position: relative;
             background-image:
-                linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.25)),
-                url("/header-bg.png");
-            background-size: cover;
-            background-position: center 85%;
+                url("/header-bg-new.png");
+            background-size: contain;
+            background-position: center center;
+            background-repeat: no-repeat;
+            aspect-ratio: 1024 / 563;
+        }
+
+        .header-box .corner,
+        .header-box .stamp,
+        .header-box .header-monogram,
+        .header-box .header-logo,
+        .header-box h1,
+        .header-box .subtitle-mono {
+            display: none !important;
         }
 
         .corner {
